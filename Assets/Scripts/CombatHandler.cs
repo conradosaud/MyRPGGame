@@ -6,6 +6,8 @@ using UnityEngine;
 public class CombatHandler : MonoBehaviour
 {
 
+    public Skill selectedSkill;
+
     CharacterStatus characterStatus;
     Transform damageDisplay; // pensar numa forma otimizada
 
@@ -28,11 +30,8 @@ public class CombatHandler : MonoBehaviour
 
     }
 
-    public bool IsAvailableRange(Skill skill, Transform target = null)
+    public bool IsAvailableRange(Skill skill, Transform target)
     {
-
-        if (target == null )
-            target = PlayerInput.selectedTarget;
         if (target == null)
             return false;
 
@@ -50,17 +49,17 @@ public class CombatHandler : MonoBehaviour
     public bool CastSkill(Skill skill, Transform target)
     {
 
-        CombatHandler targetCombat = target.GetComponent<CombatHandler>();
+        CombatHandler opponentCombatHandler = target.GetComponent<CombatHandler>();
 
-        if (targetCombat == null)
+        if (opponentCombatHandler == null)
             return false;
 
-        targetCombat.TakeHitFromOther(skill, transform);
+        opponentCombatHandler.TakeHitFromOther(skill, transform);
 
         HUD.SetMessageDebug($"Skill [{skill.name}] lançada!");
         skill.countdownElapsed = skill.countdown;
 
-        PlayerCombat.selectedSkill = null;
+        selectedSkill = null;
 
         return true;
     }

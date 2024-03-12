@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class PlayerCombat : MonoBehaviour
     List<Skill> skillsList;
 
     // Stored last skill pressed to cast when its available
-    public static Skill selectedSkill = null;
+    //public static Skill selectedSkill = null;
 
     void Start()
     {
@@ -34,73 +33,40 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
             {
-                int input = i - 1; // pressed input index
-                selectedSkill = skillsList[input];
+                int input = i - 1;
+                combatHandler.selectedSkill = skillsList[input];
             }
         }
 
         if (PlayerInput.selectedTarget == null || PlayerInput.selectedTarget.CompareTag("Enemy") == false)
             return;
 
-
-        if (selectedSkill == null)
-            if (Input.GetKey(KeyCode.Mouse0))
-                selectedSkill = characterSkills.basicAttack;
-            else
-                selectedSkill = null;
-
         HandleAttack();
-
         
     }
 
-    void HandleAttack( Skill skill = null )
+    void HandleAttack()
     {
 
-        if (skill == null)
-            skill = selectedSkill;
+        Skill skill = combatHandler.selectedSkill;
+
         if (skill == null)
             return;
 
-        // Persist on follow if basic attack is holding mouse button
-        if( skill == characterSkills.basicAttack)
-        {
-            if( Input.GetKey(KeyCode.Mouse0) == false)
-            {
-                HandleFollowSelectedTargetToAttack(false);
-                return;
-            }
-
-        }
-
+        bool isAvailableRange = combatHandler.IsAvailableRange(skill, PlayerInput.selectedTarget);
         bool isAvailableSkill = combatHandler.IsAvailableSkill(skill);
-        bool isAvailableRange = combatHandler.IsAvailableRange(skill);
 
         if (isAvailableRange == false)
         {
-            HandleFollowSelectedTargetToAttack(true, skill);
+            PlayerMove.followSelectedTarget = true;
         }
 
-        if (isAvailableSkill && isAvailableRange && canAttack)
+        if (isAvailableRange && isAvailableSkill)
         {
 
             combatHandler.CastSkill(skill, PlayerInput.selectedTarget);
-            HandleFollowSelectedTargetToAttack(false);
-
-        }
-    }
-
-    void HandleFollowSelectedTargetToAttack( bool follow, Skill skill = null )
-    {
-        if( follow)
-        {
-            selectedSkill = skill;
-            PlayerMove.followSelectedTarget = true;
-        }
-        else
-        {
-            selectedSkill = null;
             PlayerMove.followSelectedTarget = false;
+
         }
     }
 

@@ -12,19 +12,21 @@ public class EnemyMove : MonoBehaviour
     public float maxRestTime = 6f;
     float restTime;
 
-    Vector3 moveDirection;
 
-    bool canRound = true;
+    bool isPatrolling = true;
+    public bool followSelectedTarget = false;
+
     bool reachDestiny = true;
     bool moveToDestiny = false;
-
-    float restTimeElapsed = 0;
 
     CharacterController cc;
     CharacterStatus characterStatus;
     EnemyAI enemyAI;
+    EnemyCombat enemyCombat;
+    Transform player;
 
     Vector3 destiny;
+    Vector3 moveDirection;
     Bounds patrolAreaBounds;
 
     // Start is called before the first frame update
@@ -33,6 +35,8 @@ public class EnemyMove : MonoBehaviour
         cc = GetComponent<CharacterController>();
         characterStatus = GetComponent<CharacterStatus>();
         enemyAI = GetComponent<EnemyAI>();
+        enemyCombat = GetComponent<EnemyCombat>();
+        player = GameObject.FindWithTag("Player").transform;
 
         patrolAreaBounds = transform.Find("PatrolArea").GetComponent<Renderer>().bounds;
     }
@@ -40,34 +44,54 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if( canRound )
+
+        if(enemyCombat.isFighting)
         {
-            if( reachDestiny == true )
+            Debug.Log("Esta lutando");
+            if (followSelectedTarget)
             {
-                reachDestiny = false;
-
-                restTime = Random.Range(minRestTime, maxRestTime);
-
-                Vector3 randomPointInPatrolArea = new Vector3(
-                    Random.Range(patrolAreaBounds.min.x, patrolAreaBounds.max.x),
-                    patrolAreaBounds.center.y, // keep original height
-                    Random.Range(patrolAreaBounds.min.z, patrolAreaBounds.max.z)
-                );
-                destiny = randomPointInPatrolArea;
-                Invoke("EnableMoveToDestiny", restTime);
+                Debug.Log("estáppesrguindo");
+                Move(enemyCombat.target.position);
             }
 
-            if ( moveToDestiny == true)
-            {
-                Move(destiny);
-            }
+            return;
 
-            if (Vector3.Distance(transform.position, destiny) < 0.9f)
-            {
-                moveToDestiny = false;
-                reachDestiny = true;
-            }
+        }
 
+        if( isPatrolling )
+        {
+            Patrol();
+        }
+
+    }
+
+
+    void Patrol()
+    {
+        if (reachDestiny == true)
+        {
+            reachDestiny = false;
+
+            restTime = Random.Range(minRestTime, maxRestTime);
+
+            Vector3 randomPointInPatrolArea = new Vector3(
+                Random.Range(patrolAreaBounds.min.x, patrolAreaBounds.max.x),
+                patrolAreaBounds.center.y, // keep original height
+                Random.Range(patrolAreaBounds.min.z, patrolAreaBounds.max.z)
+            );
+            destiny = randomPointInPatrolArea;
+            Invoke("EnableMoveToDestiny", restTime);
+        }
+
+        if (moveToDestiny == true)
+        {
+            Move(destiny);
+        }
+
+        if (Vector3.Distance(transform.position, destiny) < 0.9f)
+        {
+            moveToDestiny = false;
+            reachDestiny = true;
         }
 
     }
@@ -75,11 +99,14 @@ public class EnemyMove : MonoBehaviour
     void Move(Vector3 moveDirection)
     {
 
-        if( enemyAI.target != null)
+        if(enemyCombat.target != null)
         {
-            float offsetDistance = Vector3.Distance(transform.position, enemyAI.target.position);
+            float offsetDistance = Vector3.Distance(transform.position, enemyCombat.target.position);
             if (offsetDistance < targetOffsetDistance)
+            {
+                Debug.Log("é menor porra");
                 return;
+            }
         }
 
         if (moveDirection != Vector3.zero)
