@@ -9,13 +9,13 @@ public class CharacterGenericAnimation : MonoBehaviour
     public float velocityToRun = 0.9f;
 
     Animator animator;
-    CharacterController cc;
+    Rigidbody rb;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         if( detectMove )
-            cc = GetComponent<CharacterController>();
+            rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -23,7 +23,7 @@ public class CharacterGenericAnimation : MonoBehaviour
         if (!detectMove)
             return;
 
-        animator.SetBool("run", cc.velocity.magnitude > velocityToRun);
+        animator.SetBool("run", rb.velocity.magnitude > velocityToRun);
 
     }
 

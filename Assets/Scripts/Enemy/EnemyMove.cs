@@ -19,7 +19,7 @@ public class EnemyMove : MonoBehaviour
     bool reachDestiny = true;
     bool moveToDestiny = false;
 
-    CharacterController cc;
+    Rigidbody rb;
     CharacterStatus characterStatus;
     EnemyAI enemyAI;
     EnemyCombat enemyCombat;
@@ -32,7 +32,7 @@ public class EnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
         characterStatus = GetComponent<CharacterStatus>();
         enemyAI = GetComponent<EnemyAI>();
         enemyCombat = GetComponent<EnemyCombat>();
@@ -76,12 +76,7 @@ public class EnemyMove : MonoBehaviour
 
             restTime = Random.Range(minRestTime, maxRestTime);
 
-            Vector3 randomPointInPatrolArea = new Vector3(
-                Random.Range(patrolAreaBounds.min.x, patrolAreaBounds.max.x),
-                patrolAreaBounds.center.y, // keep original height
-                Random.Range(patrolAreaBounds.min.z, patrolAreaBounds.max.z)
-            );
-            destiny = randomPointInPatrolArea;
+            destiny = GetNewDestiny();
             Invoke("EnableMoveToDestiny", restTime);
         }
 
@@ -114,14 +109,13 @@ public class EnemyMove : MonoBehaviour
             moveDirection = (moveDirection - transform.position).normalized;
         }
 
-        // Apply gravity
-        moveDirection.y -= gravity;
         // Apply velocity to the axis
         moveDirection.x *= characterStatus.moveSpeed;
         moveDirection.z *= characterStatus.moveSpeed;
 
-        // Move towards the target
-        cc.Move(moveDirection * Time.deltaTime);
+        // Update the velocity of the rigidbody
+        Vector3 velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        rb.velocity = velocity;
     }
 
     void EnableMoveToDestiny()
@@ -129,14 +123,26 @@ public class EnemyMove : MonoBehaviour
         moveToDestiny = true;
     }
 
+    Vector3 GetNewDestiny()
+    {
+        Vector3 randomPointInPatrolArea = new Vector3(
+                Random.Range(patrolAreaBounds.min.x, patrolAreaBounds.max.x),
+                patrolAreaBounds.center.y, // keep original height
+                Random.Range(patrolAreaBounds.min.z, patrolAreaBounds.max.z)
+            );
+        return randomPointInPatrolArea;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        
+
         // Reset destiny path if hit in something
-        if (cc.velocity.magnitude < 0.1f)
+        if ( isPatrolling )
         {
+            // Ao bater um obstáculo ele cria uma nova rota, mas a nova rota pode continuar
+            // sendo em um ponto que ele não alcança. Precisava rever isso aqui
+            //destiny = GetNewDestiny();
             reachDestiny = true;
-            Debug.Log(collision.gameObject.name);
         }
     }
     

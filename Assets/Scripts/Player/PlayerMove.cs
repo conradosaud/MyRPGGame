@@ -19,14 +19,14 @@ public class PlayerMove : MonoBehaviour
 
     public float targetOffsetDistance = 2f;
 
-    CharacterController cc;
+    Rigidbody rb;
     CharacterStatus characterStatus;
     CharacterSkills characterSkills;
 
 
     void Start()
     {
-        cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
         characterStatus = GetComponent<CharacterStatus>();
         characterSkills = GetComponent<CharacterSkills>();
     }
@@ -79,14 +79,13 @@ public class PlayerMove : MonoBehaviour
             moveDirection = (moveDirection - transform.position).normalized;
         }
 
-        // Apply gravity
-        moveDirection.y -= gravity;
         // Apply velocity to the axis
         moveDirection.x *= characterStatus.moveSpeed;
         moveDirection.z *= characterStatus.moveSpeed;
 
-        // Move towards the target
-        cc.Move(moveDirection * Time.deltaTime);
+        // Update the velocity of the rigidbody
+        Vector3 velocity = new Vector3( moveDirection.x, rb.velocity.y, moveDirection.z );
+        rb.velocity = velocity;
     }
 
 }

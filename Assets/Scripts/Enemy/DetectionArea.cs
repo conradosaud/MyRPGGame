@@ -9,24 +9,34 @@ public class DetectionArea : MonoBehaviour
 
     void Start()
     {
-        //enemyMove = transform.parent.GetComponent<EnemyMove>();
+        enemyCombat = transform.GetComponent<EnemyCombat>();
     }
 
     private void OnTriggerStay(Collider collider)
     {
+
+        // Prevent bug. I dont know why what is exactly
+        if (enemyCombat == null)
+            return;
+
         if( collider.CompareTag("Player"))
         {
-            transform.parent.GetComponent<EnemyCombat>().isFighting = true;
-            transform.parent.GetComponent<EnemyCombat>().target = GameObject.FindWithTag("Player").transform;
+            Debug.Log(transform.name);
+            enemyCombat.isFighting = true;
+            enemyCombat.target = collider.transform;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if( other.CompareTag("Player"))
+
+        if (enemyCombat == null)
+            return;
+
+        if ( other.CompareTag("Player"))
         {
-            transform.parent.GetComponent<EnemyCombat>().isFighting = false;
-            transform.parent.GetComponent<EnemyCombat>().target = null;
+            enemyCombat.isFighting = false;
+            enemyCombat.target = null;
         }
     }
 }
