@@ -14,9 +14,7 @@ public class PlayerMove : MonoBehaviour
 {
      
     public float gravity = Constants.gravity;
-
     public static bool followSelectedTarget = false;
-
     public float targetOffsetDistance = 2f;
 
     Rigidbody rb;
@@ -61,6 +59,9 @@ public class PlayerMove : MonoBehaviour
     void Move( Vector3 moveDirection )
     {
 
+        if (CanMove() == false)
+            return;
+
         // Dont move if is in the limit of offset
         //if( PlayerInput.hoveredTarget == PlayerInput.selectedTarget) // maybe check if is null?
         if (PlayerInput.selectedTarget != null && PlayerInput.selectedTarget.CompareTag("Enemy") )
@@ -86,6 +87,11 @@ public class PlayerMove : MonoBehaviour
         // Update the velocity of the rigidbody
         Vector3 velocity = new Vector3( moveDirection.x, rb.velocity.y, moveDirection.z );
         rb.velocity = velocity;
+    }
+
+    bool CanMove()
+    {
+        return GetComponent<CombatHandler>().isCasting == false;
     }
 
 }

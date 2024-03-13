@@ -93,7 +93,7 @@ public class PlayerInput : MonoBehaviour
 
         // Add new selected target
         selectedTarget = target;
-        if( selectedTarget.CompareTag("Enemy"))
+        if(selectedTarget.GetComponent<Outline>() != null )
         {
             selectedTarget.GetComponent<Outline>().enabled = true;
         }

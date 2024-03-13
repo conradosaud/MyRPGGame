@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CombatHandler : MonoBehaviour
 {
 
     public Skill selectedSkill;
+    public Transform target;
 
+    [HideInInspector]
+    public bool isCasting = false;
+
+    Animator animator;
     CharacterStatus characterStatus;
     Transform damageDisplay; // pensar numa forma otimizada
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         characterStatus = GetComponent<CharacterStatus>();
         damageDisplay = GameObject.FindWithTag("Display").transform.Find("Damage").transform;
     }
-
+    
     public bool IsAvailableSkill(Skill skill)
     {
 
@@ -30,7 +38,7 @@ public class CombatHandler : MonoBehaviour
 
     }
 
-    public bool IsAvailableRange(Skill skill, Transform target)
+    public bool IsAvailableRange(Skill skill)
     {
         if (target == null)
             return false;
@@ -46,7 +54,7 @@ public class CombatHandler : MonoBehaviour
 
     }
 
-    public bool CastSkill(Skill skill, Transform target)
+    public bool CastSkill()
     {
 
         CombatHandler opponentCombatHandler = target.GetComponent<CombatHandler>();
@@ -54,18 +62,43 @@ public class CombatHandler : MonoBehaviour
         if (opponentCombatHandler == null)
             return false;
 
-        opponentCombatHandler.TakeHitFromOther(skill, transform);
+        animator.SetTrigger(selectedSkill.animation);
+        isCasting = true;
 
-        HUD.SetMessageDebug($"Skill [{skill.name}] lançada!");
-        skill.countdownElapsed = skill.countdown;
+        HUD.SetMessageDebug($"Skill [{selectedSkill.name}] lançada!");
+        selectedSkill.countdownElapsed = selectedSkill.countdown;
 
-        selectedSkill = null;
+        if (selectedSkill.abilityPrefab == null)
+        {
+            opponentCombatHandler.TakeHitFrom(selectedSkill);
+            selectedSkill = null;
+        }
 
         return true;
     }
 
+    // Called by skill animation event
+    void StartSkillAnimation()
+    {
+        if (selectedSkill != null && selectedSkill.abilityPrefab != null)
+        {
+            Transform instantiated = Instantiate(selectedSkill.abilityPrefab, Path.skillPool);
+            Vector3 startPosition = transform.position;
+            startPosition.y = transform.GetComponent<Collider>().bounds.size.y / 2;
+            instantiated.position = startPosition;
+            instantiated.AddComponent<SkillComponent>();
+            instantiated.GetComponent<SkillComponent>().skill = selectedSkill;
+            instantiated.GetComponent<SkillComponent>().skill.target = target;
+            selectedSkill = null;
+        }
+    }
+    void EndSkillCastAnimation()
+    {
+        isCasting = false;
+    }
+
     // Rever o conceito dessa função e se ela é relevante ela existir
-    public bool TakeHitFromOther(Skill skill, Transform other)
+    public bool TakeHitFrom(Skill skill)
     {
         TakeDamage(skill.damage);
         return true;

@@ -32,4 +32,14 @@ public class CharacterGenericAnimation : MonoBehaviour
         animator.SetTrigger("magic");
     }
 
+    public void StartCastAnimation(Skill skill)
+    {
+        animator.SetTrigger(skill.animation);
+    }
+
+    public void SkillCasted( Skill skill )
+    {
+
+    }
+
 }

@@ -16,6 +16,13 @@ public class Skill : ScriptableObject
     public float countdownElapsed = 0;
     public int range;
 
+    public bool canMoveOnCast = false;
+
+    public string animation = Constants.defaultAttackAnimation;
+    public Transform abilityPrefab = null;
+    [HideInInspector]
+    public Transform target = null;
+
     public bool basicAttack { get; set; }
 
     public static Skill FindSkillByName(List<Skill> skills, string name)

@@ -15,5 +15,7 @@ MonoBehaviour:
   name: Fireball
   damage: 3
   countdown: 1.5
-  countdownElapsed: 0
-  range: 4
+  countdownElapsed: -0.01999874
+  range: 10
+  animation: magic
+  abilityPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}

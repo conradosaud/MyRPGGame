@@ -48,13 +48,14 @@ public class PlayerCombat : MonoBehaviour
     void HandleAttack()
     {
 
-        Skill skill = combatHandler.selectedSkill;
-
-        if (skill == null)
+        if (combatHandler.selectedSkill == null)
             return;
 
-        bool isAvailableRange = combatHandler.IsAvailableRange(skill, PlayerInput.selectedTarget);
-        bool isAvailableSkill = combatHandler.IsAvailableSkill(skill);
+        
+        combatHandler.target = PlayerInput.selectedTarget;
+
+        bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
+        bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
 
         if (isAvailableRange == false)
         {
@@ -63,8 +64,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (isAvailableRange && isAvailableSkill)
         {
-
-            combatHandler.CastSkill(skill, PlayerInput.selectedTarget);
+            combatHandler.CastSkill();
             PlayerMove.followSelectedTarget = false;
 
         }

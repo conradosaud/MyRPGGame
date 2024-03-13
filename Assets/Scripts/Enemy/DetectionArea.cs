@@ -6,10 +6,12 @@ public class DetectionArea : MonoBehaviour
 {
 
     EnemyCombat enemyCombat;
+    CombatHandler combatHandler;
 
     void Start()
     {
         enemyCombat = transform.GetComponent<EnemyCombat>();
+        combatHandler = transform.GetComponent<CombatHandler>();
     }
 
     private void OnTriggerStay(Collider collider)
@@ -21,9 +23,8 @@ public class DetectionArea : MonoBehaviour
 
         if( collider.CompareTag("Player"))
         {
-            Debug.Log(transform.name);
             enemyCombat.isFighting = true;
-            enemyCombat.target = collider.transform;
+            combatHandler.target = collider.transform;
         }
     }
 
@@ -36,7 +37,7 @@ public class DetectionArea : MonoBehaviour
         if ( other.CompareTag("Player"))
         {
             enemyCombat.isFighting = false;
-            enemyCombat.target = null;
+            combatHandler.target = null;
         }
     }
 }

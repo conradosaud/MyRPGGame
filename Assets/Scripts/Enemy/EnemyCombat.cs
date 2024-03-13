@@ -5,14 +5,11 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
 
-    public Transform target;
     EnemyMove enemyMove;
     CombatHandler combatHandler;
     CharacterSkills characterSkills;
 
     public bool isFighting = false;
-
-    Skill selectedSkill;
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +35,11 @@ public class EnemyCombat : MonoBehaviour
     void HandleAttack()
     {
 
-        Skill skill = combatHandler.selectedSkill;
-
-        if (skill == null)
+        if (combatHandler.selectedSkill == null)
             return;
 
-        bool isAvailableRange = combatHandler.IsAvailableRange(skill, target);
-        bool isAvailableSkill = combatHandler.IsAvailableSkill(skill);
+        bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
+        bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
 
         if (isAvailableRange == false)
         {
@@ -54,7 +49,7 @@ public class EnemyCombat : MonoBehaviour
         if (isAvailableRange && isAvailableSkill)
         {
             enemyMove.followSelectedTarget = false;
-            combatHandler.CastSkill(skill, target);
+            combatHandler.CastSkill();
 
         }
     }
