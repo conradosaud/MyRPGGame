@@ -20,14 +20,14 @@ public class PlayerMove : MonoBehaviour
     public float targetOffsetDistance = 2f;
 
     CharacterController cc;
-    CharacterStatus status;
+    CharacterStatus characterStatus;
     CharacterSkills characterSkills;
 
 
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        status = GetComponent<CharacterStatus>();
+        characterStatus = GetComponent<CharacterStatus>();
         characterSkills = GetComponent<CharacterSkills>();
     }
 
@@ -67,7 +67,7 @@ public class PlayerMove : MonoBehaviour
         {
             
             float offsetDistance = Vector3.Distance(transform.position, PlayerInput.selectedTarget.position);
-            if (offsetDistance < targetOffsetDistance )
+            if (offsetDistance < characterStatus.range)
                 return;
             
         }
@@ -75,15 +75,15 @@ public class PlayerMove : MonoBehaviour
 
         if ( moveDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation( moveDirection );
+            Utils.LookAtYZ(transform, moveDirection);
             moveDirection = (moveDirection - transform.position).normalized;
         }
 
         // Apply gravity
         moveDirection.y -= gravity;
         // Apply velocity to the axis
-        moveDirection.x *= status.moveSpeed;
-        moveDirection.z *= status.moveSpeed;
+        moveDirection.x *= characterStatus.moveSpeed;
+        moveDirection.z *= characterStatus.moveSpeed;
 
         // Move towards the target
         cc.Move(moveDirection * Time.deltaTime);

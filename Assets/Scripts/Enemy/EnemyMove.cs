@@ -45,12 +45,12 @@ public class EnemyMove : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(enemyCombat.isFighting)
+        moveDirection = Vector3.zero;
+
+        if (enemyCombat.isFighting)
         {
-            Debug.Log("Esta lutando");
             if (followSelectedTarget)
             {
-                Debug.Log("estáppesrguindo");
                 Move(enemyCombat.target.position);
             }
 
@@ -68,9 +68,11 @@ public class EnemyMove : MonoBehaviour
 
     void Patrol()
     {
+
         if (reachDestiny == true)
         {
             reachDestiny = false;
+            Move(Vector3.zero); // stop character controller velocity
 
             restTime = Random.Range(minRestTime, maxRestTime);
 
@@ -102,16 +104,13 @@ public class EnemyMove : MonoBehaviour
         if(enemyCombat.target != null)
         {
             float offsetDistance = Vector3.Distance(transform.position, enemyCombat.target.position);
-            if (offsetDistance < targetOffsetDistance)
-            {
-                Debug.Log("é menor porra");
+            if (offsetDistance < characterStatus.range)
                 return;
-            }
         }
 
         if (moveDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(moveDirection);
+            Utils.LookAtYZ(transform, moveDirection);
             moveDirection = (moveDirection - transform.position).normalized;
         }
 
@@ -130,4 +129,15 @@ public class EnemyMove : MonoBehaviour
         moveToDestiny = true;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        // Reset destiny path if hit in something
+        if (cc.velocity.magnitude < 0.1f)
+        {
+            reachDestiny = true;
+            Debug.Log(collision.gameObject.name);
+        }
+    }
+    
 }

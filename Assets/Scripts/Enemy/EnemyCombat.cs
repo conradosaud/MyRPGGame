@@ -63,7 +63,6 @@ public class EnemyCombat : MonoBehaviour
     {
         foreach( Skill skill in characterSkills.skills)
         {
-            Debug.Log(skill.countdownElapsed);
             if( skill.countdownElapsed <= 0)
             {
                 return skill;
