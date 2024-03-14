@@ -8,7 +8,6 @@ public class GenericProjectile : MonoBehaviour
     public float velocity = 1.5f;
     Transform target;
     Skill skill;
-    //public dynamic callback;
 
     private void Start()
     {

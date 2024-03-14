@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
-  m_Name: Punch
+  m_Name: Slash
   m_EditorClassIdentifier: 
-  name: Punch
-  damage: 2
-  countdown: 1.5
-  countdownElapsed: -0.01999874
+  name: Slash
+  damage: 3
+  countdown: 2
+  countdownElapsed: -0.019998264
   range: 2
+  isProjectile: 0
   canMoveOnCast: 0
-  animationClip: {fileID: 0}
-  abilityPrefab: {fileID: 0}
+  animationClip: {fileID: 7400000, guid: 8ca8c8929c4ecba4e94786e8d78d9ad1, type: 2}
+  abilityPrefab: {fileID: 2164382971086557419, guid: 8ef292241c2db9748b9116a81e74de20, type: 3}
   target: {fileID: 0}

@@ -98,6 +98,9 @@ public class EnemyMove : MonoBehaviour
     void Move(Vector3 moveDirection)
     {
 
+        if (CanRun() == false)
+            return;
+
         if(combatHandler.target != null)
         {
             float offsetDistance = Vector3.Distance(transform.position, combatHandler.target.position);
@@ -146,6 +149,11 @@ public class EnemyMove : MonoBehaviour
             //destiny = GetNewDestiny();
             reachDestiny = true;
         }
+    }
+
+    bool CanRun()
+    {
+        return combatHandler.isCasting == false;
     }
     
 }

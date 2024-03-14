@@ -62,8 +62,17 @@ public class CombatHandler : MonoBehaviour
         if (opponentCombatHandler == null)
             return false;
 
-        animator.SetTrigger(selectedSkill.animation);
+
+        string animation;
+        if (selectedSkill.animationClip == null)
+            animation = selectedSkill.name.ToLower(); // trocar espaço por underline
+        else
+            animation = selectedSkill.animationClip.name;
+
+        transform.LookAt(target);
+        animator.Play(animation);
         isCasting = true;
+        //StartCoroutine( Utils.CheckAnimationCompleted(animator, animation, ()=> { EndSkillCastAnimation(); }));
 
         HUD.SetMessageDebug($"Skill [{selectedSkill.name}] lançada!");
         selectedSkill.countdownElapsed = selectedSkill.countdown;
@@ -83,12 +92,24 @@ public class CombatHandler : MonoBehaviour
         if (selectedSkill != null && selectedSkill.abilityPrefab != null)
         {
             Transform instantiated = Instantiate(selectedSkill.abilityPrefab, Path.skillPool);
-            Vector3 startPosition = transform.position;
-            startPosition.y = transform.GetComponent<Collider>().bounds.size.y / 2;
-            instantiated.position = startPosition;
-            instantiated.AddComponent<SkillComponent>();
-            instantiated.GetComponent<SkillComponent>().skill = selectedSkill;
-            instantiated.GetComponent<SkillComponent>().skill.target = target;
+            
+            if( selectedSkill.isProjectile)
+            {
+                Vector3 startPosition = transform.position;
+                startPosition.y = transform.GetComponent<Collider>().bounds.size.y / 2;
+                instantiated.position = startPosition;
+                instantiated.AddComponent<SkillComponent>();
+                instantiated.GetComponent<SkillComponent>().skill = selectedSkill;
+                instantiated.GetComponent<SkillComponent>().skill.target = target;
+            }
+            else
+            {
+                Vector3 startPosition = target.position;
+                startPosition.y = transform.GetComponent<Collider>().bounds.size.y / 2;
+                instantiated.position = startPosition;
+                Utils.LookAtYZ(instantiated, transform.position);
+                target.GetComponent<CombatHandler>().TakeDamage(selectedSkill.damage);
+            }
             selectedSkill = null;
         }
     }

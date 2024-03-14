@@ -8,5 +8,5 @@ public class Constants
     public const float gravity = 9.8f;
     public const float rangeDistanceOffset = 2f;
 
-    public const string defaultAttackAnimation = "magic";
+    public const string defaultAttackAnimation = "Cast";
 }

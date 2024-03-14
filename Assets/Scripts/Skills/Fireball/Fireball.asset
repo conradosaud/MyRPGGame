@@ -17,5 +17,8 @@ MonoBehaviour:
   countdown: 1.5
   countdownElapsed: -0.01999874
   range: 10
-  animation: magic
+  isProjectile: 1
+  canMoveOnCast: 0
+  animationClip: {fileID: 7400000, guid: 7ea2789a6c07d8d4ba49586fae8d055d, type: 2}
   abilityPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}
+  target: {fileID: 0}
