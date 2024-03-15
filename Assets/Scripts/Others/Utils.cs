@@ -24,6 +24,11 @@ public class Utils
         //return transform.rotation;
     }
 
+    public static string NoPrefix(string text, string prefix = "_")
+    {
+        return text == null || text == "" ? "" : text.Split(prefix)[0];
+    }
+
     // ----------- - ANIMATIONS - -----------
     public static bool ContainsParam(Animator animator, string parameterName)
     {

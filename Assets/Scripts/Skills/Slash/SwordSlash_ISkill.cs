@@ -12,52 +12,39 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
     // Skill casted
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
-    // Caster animator
-    Animator casterAnimator;
-    // SkillPrefab instance (for not overrides the original)
-    Skill skillPrefab;
 
     // -- Custom skill variables
     public AnimationClip casterAnimationClip;
     public float skillStartTime = 1.5f;
     public float velocity = 3f;
+
     public float zOffset = 1.5f;
+    Vector3 offset;
 
     private void Start()
     {
-        if (skill == null)
-        {
-            HUD.SetMessageDebug("-- Missing skill reference on " + this.name);
-            return;
-        }
-        else
-        {
-            if( skill.caster.CompareTag("Player") )
-                HUD.SetMessageDebug($"-- Casting skill [{skill.name}] on [target {skill.target.name}]");
-        }
-        casterAnimator = skill.caster.GetComponent<Animator>();
-        //skillPrefab = skill.skillPrefab.Clone();
 
+        // Check skill for prevent bugs
+        if ( SkillUtilities.isSkillNull(skill) == false )
+            return;
+        SkillUtilities.ShowHUDCastMessage(skill);
+
+        // Custom variables start
+        offset = new Vector3(0, 0, zOffset);
+
+        // Initiate this skill configs
         Initiate();
 
     }
 
-    public float GetPositionY()
-    {
-        if (skill.caster.GetComponent<Collider>() == null)
-            return skill.caster.position.y;
-        return skill.caster.GetComponent<Collider>().bounds.size.y / 1.5f;
-    }
-
-    // --------- ISkill interface functions ---------
+    
+    // --------- - ISkill interface functions - ---------
 
     public void Initiate()
     {
 
-        Vector3 newPosition = skill.caster.position;
-        newPosition.y = GetPositionY();
-        newPosition.z += zOffset;
-        transform.position = newPosition;
+        // Positionate this prefab on caster center
+        transform.position = SkillUtilities.GetCasterCenterPosition(skill, offset);
 
         // Always call the beginning of the character's animation
         ExecuteCharacterAnimation();
@@ -65,22 +52,28 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
 
     public void ExecuteCharacterAnimation()
     {
-        string animationName = casterAnimationClip.name.Split("_Animation")[0];
-        casterAnimator.Play(animationName);
+        // Remove the prefix of animation, like SwordSlash_Animation to SwordSlash
+        string animationName = Utils.NoPrefix( casterAnimationClip.name );
+        // Play the animation by its name in caster animator
+        skill.caster.GetComponent<Animator>().Play(animationName);
+        // Wait characters animation time to executes the skill animation
         Invoke("ExecuteSkillAnimation", skillStartTime);
     }
 
     public void ExecuteSkillAnimation()
     {
 
+        // Cancel and destroy object if there's target anymore
         if (skill.target == null)
         {
             Destroy(gameObject);
             return;
         }
 
+        // Start the particles system. If it has a mesh, shoud be enabled here
         GetComponent<ParticleSystem>().Play();
 
+        // Apply this skill effect
         if (skill.target.GetComponent<CombatHandler>() != null)
             skill.target.GetComponent<CombatHandler>().TakeHitFrom(skill);
 

@@ -10,75 +10,63 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
     // Skill casted
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
-    // Caster animator
-    Animator casterAnimator;
 
-    // -- Custom skill variables
+    // -- This skill custom variables
     public AnimationClip casterAnimationClip;
-    public float skillStartTime = 1.5f;
+    public float skillStartTime = 0.5f;
     public float velocity = 3f;
+
     public float zOffset = 1.5f;
+    Vector3 offset;
     bool isProjecting = false;
 
     private void Start()
     {
-        if (skill == null)
-        {
-            Debug.Log("-- Missing skill reference on " + this.name);
-            return;
-        }
-        casterAnimator = skill.caster.GetComponent<Animator>();
 
+        // Check skill for prevent bugs
+        if (SkillUtilities.isSkillNull(skill) == false)
+            return;
+        SkillUtilities.ShowHUDCastMessage(skill);
+
+        // Custom variables start
+        offset = new Vector3(0, 0, zOffset);
+
+        // Initiate this skill configs
         Initiate();
 
     }
-
+    
+    // Update is commonly used for projectiles or skill that apply effects over the time
     private void FixedUpdate()
     {
+        // Cancel update if its nothing projecting
         if (!isProjecting)
             return;
 
+        // Cancel update and destroy object if there's target anymore
         if (skill.target == null)
+        {
             Destroy(gameObject);
+            return;
+        }
 
+        // Change this prefab position to follow the target
         Vector3 moveDirection = Vector3.MoveTowards(transform.position, skill.target.position, velocity * Time.deltaTime);
-        moveDirection.y = GetPositionY();
+        moveDirection.y = SkillUtilities.GetCasterCenterY(skill);
         transform.position = moveDirection;
 
     }
 
-    void SwitchMeshRender( bool enable)
-    {
-        GetComponent<Renderer>().enabled = enable;
-        GetComponent<Collider>().enabled = enable;
-    }
-
-    public float GetPositionY()
-    {
-        if (skill.caster.GetComponent<Collider>() == null)
-            return skill.caster.position.y;
-        return skill.caster.GetComponent<Collider>().bounds.size.y / 1.5f;
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.transform == skill.target)
-        {
-            if (collider.GetComponent<CombatHandler>() != null)
-                collider.GetComponent<CombatHandler>().TakeHitFrom(skill);
-            Destroy(gameObject);
-        }
-    }
-
-    // --------- ISkill interface functions ---------
+    // --------- - ISkill interface functions - ---------
 
     public void Initiate()
     {
+
+        // Disable render on start
         SwitchMeshRender(false);
-        Vector3 newPosition = skill.caster.position;
-        newPosition.y = GetPositionY();
-        newPosition.z += zOffset;
-        transform.position = newPosition;
+        // Positionate this prefab on caster center
+        transform.position = SkillUtilities.GetCasterCenterPosition(skill, offset);
+        // Prefab look to the target
         Utils.LookAtYZ(transform, skill.target.position);
 
         // Always call the beginning of the character's animation
@@ -87,15 +75,40 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
 
     public void ExecuteCharacterAnimation()
     {
-        string animationName = casterAnimationClip.name.Split("_Animation")[0];
-        casterAnimator.Play(animationName);
+        // Remove the prefix of animation, like Fireball_Animation to Fireball
+        string animationName = Utils.NoPrefix(casterAnimationClip.name);
+        // Play the animation by its name in caster animator
+        skill.caster.GetComponent<Animator>().Play(animationName);
+        // Wait characters animation time to executes the skill animation
         Invoke("ExecuteSkillAnimation", skillStartTime);
     }
 
     public void ExecuteSkillAnimation()
     {
+        // Skill animation starts: show prefab mesh
         SwitchMeshRender(true);
+        // Enable update to follow target
         isProjecting = true;
+    }
+
+    // --------- - Custom functions of this skill - ---------
+
+    // Show/Hide mesh of this prefab
+    void SwitchMeshRender(bool enable)
+    {
+        GetComponent<Renderer>().enabled = enable;
+        GetComponent<Collider>().enabled = enable;
+    }
+
+    // Verify if this prefab collided with the target to apply his effect
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform == skill.target)
+        {
+            if (collider.GetComponent<CombatHandler>() != null)
+                collider.GetComponent<CombatHandler>().TakeHitFrom(skill);
+            Destroy(gameObject);
+        }
     }
 
 }
