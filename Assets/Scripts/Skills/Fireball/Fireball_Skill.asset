@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
-  m_Name: Fireball
+  m_Name: Fireball_Skill
   m_EditorClassIdentifier: 
   name: Fireball
   damage: 3
   countdown: 1.5
-  countdownElapsed: -0.01999874
   range: 10
+  countdownElapsed: -0.01999874
+  caster: {fileID: 0}
   isProjectile: 1
   canMoveOnCast: 0
-  animationClip: {fileID: 7400000, guid: 7ea2789a6c07d8d4ba49586fae8d055d, type: 2}
-  abilityPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}
+  skillPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}
   target: {fileID: 0}

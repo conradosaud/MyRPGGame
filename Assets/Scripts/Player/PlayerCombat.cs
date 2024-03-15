@@ -51,11 +51,13 @@ public class PlayerCombat : MonoBehaviour
         if (combatHandler.selectedSkill == null)
             return;
 
-        
+        combatHandler.selectedSkill.caster = transform;
+        combatHandler.selectedSkill.target = PlayerInput.selectedTarget;
+
         combatHandler.target = PlayerInput.selectedTarget;
 
-        bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
-        bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
+        bool isAvailableRange = combatHandler.selectedSkill.IsTargetInCasterRange();
+        bool isAvailableSkill = combatHandler.selectedSkill.IsSkillReady();
 
         if (isAvailableRange == false)
         {
@@ -64,9 +66,9 @@ public class PlayerCombat : MonoBehaviour
 
         if (isAvailableRange && isAvailableSkill)
         {
-            combatHandler.CastSkill();
+            combatHandler.selectedSkill.CastSkill();
             PlayerMove.followSelectedTarget = false;
-
+            combatHandler.selectedSkill = null;
         }
     }
 

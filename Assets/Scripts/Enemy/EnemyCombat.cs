@@ -25,34 +25,34 @@ public class EnemyCombat : MonoBehaviour
         if( isFighting)
         {
             combatHandler.selectedSkill = GetAvailableSkill();
-            HandleAttack();
+            //HandleAttack();
         }
 
         HandleEnemySkillbar();
 
     }
 
-    void HandleAttack()
-    {
+    //void HandleAttack()
+    //{
 
-        if (combatHandler.selectedSkill == null)
-            return;
+    //    if (combatHandler.selectedSkill == null)
+    //        return;
 
-        bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
-        bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
+    //    bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
+    //    bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
 
-        if (isAvailableRange == false)
-        {
-            enemyMove.followSelectedTarget = true;
-        }
+    //    if (isAvailableRange == false)
+    //    {
+    //        enemyMove.followSelectedTarget = true;
+    //    }
 
-        if (isAvailableRange && isAvailableSkill)
-        {
-            enemyMove.followSelectedTarget = false;
-            combatHandler.CastSkill();
+    //    if (isAvailableRange && isAvailableSkill)
+    //    {
+    //        enemyMove.followSelectedTarget = false;
+    //        combatHandler.CastSkill();
 
-        }
-    }
+    //    }
+    //}
 
     Skill GetAvailableSkill()
     {
