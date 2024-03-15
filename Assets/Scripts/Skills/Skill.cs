@@ -14,7 +14,7 @@ public class Skill : ScriptableObject
     public float countdown;
     public int range;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float countdownElapsed = 0;
     [HideInInspector]
     public Transform caster;
@@ -71,6 +71,7 @@ public class Skill : ScriptableObject
     {
         Transform instantiated = Instantiate( skillPrefab, Path.skillPool );
         instantiated.GetComponent<ISkill>().skill = this;
+        countdownElapsed = countdown;
     }
 
 }

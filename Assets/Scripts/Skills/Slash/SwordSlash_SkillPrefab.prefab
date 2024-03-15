@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2164382971086557419}
   - component: {fileID: 7028600949399815612}
   - component: {fileID: 6762671423035626764}
+  - component: {fileID: 1020574885927439343}
   m_Layer: 0
-  m_Name: SwordSlashVFX
+  m_Name: SwordSlash_SkillPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +51,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4886,3 +4887,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1020574885927439343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839325265716212428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5c5bf9c8fd85d44853a154e48f91e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  casterAnimationClip: {fileID: 7400000, guid: 8ca8c8929c4ecba4e94786e8d78d9ad1, type: 2}
+  skillStartTime: 0.65
+  velocity: 3
+  zOffset: 1.5
