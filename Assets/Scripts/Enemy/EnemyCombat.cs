@@ -25,34 +25,45 @@ public class EnemyCombat : MonoBehaviour
         if( isFighting)
         {
             combatHandler.selectedSkill = GetAvailableSkill();
-            //HandleAttack();
+            HandleAttack();
         }
 
         HandleEnemySkillbar();
 
     }
 
-    //void HandleAttack()
-    //{
+    void HandleAttack()
+    {
 
-    //    if (combatHandler.selectedSkill == null)
-    //        return;
+        if (combatHandler.selectedSkill == null)
+            return;
+        if (GetComponent<EnemyState>().state == EnemyState.State.Casting)
+        {
+            combatHandler.selectedSkill = null;
+            return;
+        }
 
-    //    bool isAvailableRange = combatHandler.IsAvailableRange(combatHandler.selectedSkill);
-    //    bool isAvailableSkill = combatHandler.IsAvailableSkill(combatHandler.selectedSkill);
+        combatHandler.selectedSkill.caster = transform;
+        combatHandler.selectedSkill.target = combatHandler.target;
 
-    //    if (isAvailableRange == false)
-    //    {
-    //        enemyMove.followSelectedTarget = true;
-    //    }
+        bool isTargetInCasterRange = combatHandler.selectedSkill.IsTargetInCasterRange();
 
-    //    if (isAvailableRange && isAvailableSkill)
-    //    {
-    //        enemyMove.followSelectedTarget = false;
-    //        combatHandler.CastSkill();
+        if (isTargetInCasterRange == false)
+        {
+            enemyMove.followSelectedTarget = true;
+        }
 
-    //    }
-    //}
+        if (combatHandler.selectedSkill.CanCastSkill())
+        {
+
+            enemyMove.followSelectedTarget = false;
+            Utils.LookAtYZ(transform, combatHandler.selectedSkill.target.position);
+            combatHandler.selectedSkill.CastSkill();
+            StartCoroutine(GetComponent<EnemyState>().SwitchStateForDuration(EnemyState.State.Casting, EnemyState.State.Idle, combatHandler.selectedSkill.castingTime));
+            combatHandler.selectedSkill = null;
+
+        }
+    }
 
     Skill GetAvailableSkill()
     {

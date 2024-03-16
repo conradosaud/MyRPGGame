@@ -10,6 +10,7 @@ public class PlayerCombat : MonoBehaviour
     public static bool isFighting = false;
     public static bool canAttack = true;
 
+    PlayerMove playerMove;
     CharacterStatus characterStatus;
     CombatHandler combatHandler;
     CharacterSkills characterSkills;
@@ -20,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
+        playerMove = GetComponent<PlayerMove>();
         characterStatus = GetComponent<CharacterStatus>();
         combatHandler = GetComponent<CombatHandler>();
         characterSkills = GetComponent<CharacterSkills>();
@@ -63,19 +65,19 @@ public class PlayerCombat : MonoBehaviour
 
         combatHandler.target = PlayerInput.selectedTarget;
 
-        bool isAvailableRange = combatHandler.selectedSkill.IsTargetInCasterRange();
-        bool isAvailableSkill = combatHandler.selectedSkill.IsSkillReady();
+        bool isTargetInCasterRange = combatHandler.selectedSkill.IsTargetInCasterRange();
+        //bool isSkillReady = combatHandler.selectedSkill.IsSkillReady();
 
-        if (isAvailableRange == false)
+        if (isTargetInCasterRange == false)
         {
-            PlayerMove.followSelectedTarget = true;
+            playerMove.followSelectedTarget = true;
         }
 
-        if (isAvailableRange && isAvailableSkill)
+        if (combatHandler.selectedSkill.CanCastSkill())
         {
             Utils.LookAtYZ(transform, combatHandler.selectedSkill.target.position);
             combatHandler.selectedSkill.CastSkill();
-            PlayerMove.followSelectedTarget = false;
+            playerMove.followSelectedTarget = false;
             StartCoroutine(GetComponent<PlayerState>().SwitchStateForDuration(PlayerState.State.Casting, PlayerState.State.Idle, combatHandler.selectedSkill.castingTime));
             combatHandler.selectedSkill = null;
         }

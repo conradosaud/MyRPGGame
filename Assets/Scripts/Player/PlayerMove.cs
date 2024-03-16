@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
 {
      
     public float gravity = Constants.gravity;
-    public static bool followSelectedTarget = false;
+    public bool followSelectedTarget = false;
     public float targetOffsetDistance = 2f;
 
     Rigidbody rb;

@@ -1107,6 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: 9.8
+  followSelectedTarget: 0
   targetOffsetDistance: 2
 --- !u!114 &210442788
 MonoBehaviour:
@@ -2825,6 +2826,9 @@ PrefabInstance:
       addedObject: {fileID: 1765323535}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f15a6e22bc85574e8b2ed48f4d4542c, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1765323541}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f15a6e22bc85574e8b2ed48f4d4542c, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1765323533}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f15a6e22bc85574e8b2ed48f4d4542c, type: 3}
       insertIndex: -1
@@ -3325,8 +3329,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
+  - {fileID: 11400000, guid: 9271a1cbb170ed34e85705636a58ce66, type: 2}
   - {fileID: 11400000, guid: 0a96522a22eb5c44f833754d02c631a7, type: 2}
-  - {fileID: 11400000, guid: 02c482f4a11f30b44b53c30e36f85f8d, type: 2}
 --- !u!114 &1765323533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3454,6 +3458,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1765323541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765323526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db251e9cf3997f04380c6cb9d9ac1e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &1809419806
 GameObject:
   m_ObjectHideFlags: 0
