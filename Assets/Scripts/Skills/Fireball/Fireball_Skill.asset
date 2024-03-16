@@ -16,6 +16,7 @@ MonoBehaviour:
   damage: 3
   countdown: 1.5
   range: 10
+  castingTime: 1.5
   countdownElapsed: -0.01999874
   caster: {fileID: 0}
   isProjectile: 1

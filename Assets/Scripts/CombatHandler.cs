@@ -120,7 +120,9 @@ public class CombatHandler : MonoBehaviour
         Transform instance = Instantiate(damageDisplay, transform);
         instance.gameObject.SetActive(true);
         instance.Find("Value").GetComponent<TextMeshProUGUI>().text = value.ToString();
-
+        Vector3 position = transform.position;
+        position.y = transform.GetComponent<Collider>().bounds.size.y;
+        instance.transform.position = position;
     }
 
 }

@@ -15,6 +15,7 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
     public AnimationClip casterAnimationClip;
     public float skillStartTime = 0.5f;
     public float velocity = 3f;
+    
 
     public float zOffset = 1.5f;
     Vector3 offset;
@@ -75,8 +76,9 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
 
     public void ExecuteCharacterAnimation()
     {
+       
         // Remove the prefix of animation, like Fireball_Animation to Fireball
-        string animationName = Utils.NoPrefix(casterAnimationClip.name);
+        string animationName = Utils.NoSufix(casterAnimationClip.name);
         // Play the animation by its name in caster animator
         skill.caster.GetComponent<Animator>().Play(animationName);
         // Wait characters animation time to executes the skill animation

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-
+        
         // Get keys to defined if is a casting
         for (int i = 0; i <= 9; i++)
         {
@@ -50,6 +51,12 @@ public class PlayerCombat : MonoBehaviour
 
         if (combatHandler.selectedSkill == null)
             return;
+        if (GetComponent<PlayerState>().state == PlayerState.State.Casting)
+        {
+            HUD.SetMessageDebug("Você ainda está castando uma skill, aguarde...");
+            combatHandler.selectedSkill = null;
+            return;
+        }
 
         combatHandler.selectedSkill.caster = transform;
         combatHandler.selectedSkill.target = PlayerInput.selectedTarget;
@@ -66,8 +73,10 @@ public class PlayerCombat : MonoBehaviour
 
         if (isAvailableRange && isAvailableSkill)
         {
+            Utils.LookAtYZ(transform, combatHandler.selectedSkill.target.position);
             combatHandler.selectedSkill.CastSkill();
             PlayerMove.followSelectedTarget = false;
+            StartCoroutine(GetComponent<PlayerState>().SwitchStateForDuration(PlayerState.State.Casting, PlayerState.State.Idle, combatHandler.selectedSkill.castingTime));
             combatHandler.selectedSkill = null;
         }
     }

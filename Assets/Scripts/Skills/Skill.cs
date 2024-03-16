@@ -9,15 +9,16 @@ using UnityEngine;
 public class Skill : ScriptableObject
 {
 
-    public string name;
-    public int damage;
-    public float countdown;
-    public int range;
+    public string name = "Skill";
+    public int damage = 1;
+    public float countdown = 1;
+    public int range = 2;
+    public float castingTime = 0;
 
     //[HideInInspector]
     public float countdownElapsed = 0;
     [HideInInspector]
-    public Transform caster;
+    public Transform caster = null;
 
 
     public bool isProjectile = false;

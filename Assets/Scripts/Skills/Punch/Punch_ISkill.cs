@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static UnityEngine.GraphicsBuffer;
 
-public class SwordSlash_ISkill : MonoBehaviour, ISkill
+public class Punch_ISkill : MonoBehaviour, ISkill
 {
 
     // Skill casted
@@ -18,9 +18,6 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
     public AnimationClip casterAnimationClip;
     public float skillStartTime = 1.5f;
 
-    public float zOffset = 1.5f;
-    Vector3 offset;
-
     private void Start()
     {
 
@@ -28,9 +25,6 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
         if ( SkillUtilities.isSkillNull(skill) == false)
             return;
         SkillUtilities.ShowHUDCastMessage(skill);
-
-        // Custom variables start
-        offset = new Vector3(0, 0, zOffset);
 
         // Initiate this skill configs
         Initiate();
@@ -44,7 +38,7 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
     {
 
         // Positionate this prefab on caster center
-        transform.position = SkillUtilities.GetCasterCenterPosition(skill, offset);
+        transform.position = SkillUtilities.GetTargetCenterPosition(skill);
 
         // Always call the beginning of the character's animation
         ExecuteCharacterAnimation();
@@ -62,7 +56,6 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
 
     public void ExecuteSkillAnimation()
     {
-
 
         // Cancel and destroy object if there's target anymore
         if (skill.target == null)

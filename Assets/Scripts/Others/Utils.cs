@@ -24,7 +24,7 @@ public class Utils
         //return transform.rotation;
     }
 
-    public static string NoPrefix(string text, string prefix = "_")
+    public static string NoSufix(string text, string prefix = "_")
     {
         return text == null || text == "" ? "" : text.Split(prefix)[0];
     }

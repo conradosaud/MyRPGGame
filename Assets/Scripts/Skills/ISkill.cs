@@ -10,5 +10,4 @@ public interface ISkill
     void Initiate();
     void ExecuteCharacterAnimation();
     void ExecuteSkillAnimation();
-
 }

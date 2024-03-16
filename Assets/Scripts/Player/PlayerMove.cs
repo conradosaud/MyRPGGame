@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
     Rigidbody rb;
     CharacterStatus characterStatus;
     CharacterSkills characterSkills;
+    PlayerState playerState;
 
 
     void Start()
@@ -27,6 +28,7 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         characterStatus = GetComponent<CharacterStatus>();
         characterSkills = GetComponent<CharacterSkills>();
+        playerState = GetComponent<PlayerState>();
     }
 
 
@@ -59,7 +61,7 @@ public class PlayerMove : MonoBehaviour
     void Move( Vector3 moveDirection )
     {
 
-        if (CanMove() == false)
+        if ( playerState.CanMove() == false )
             return;
 
         // Dont move if is in the limit of offset
@@ -73,12 +75,21 @@ public class PlayerMove : MonoBehaviour
             
         }
 
-
-        if ( moveDirection != Vector3.zero)
+        // Check if is not moved. Return and set state
+        if ( moveDirection == Vector3.zero)
         {
-            Utils.LookAtYZ(transform, moveDirection);
-            moveDirection = (moveDirection - transform.position).normalized;
+            playerState.Set(0); // Idle
+            return;
         }
+        else
+        {
+            playerState.Set(1); // Moving
+        }
+
+
+        // Look to destiny point
+        Utils.LookAtYZ(transform, moveDirection);
+        moveDirection = (moveDirection - transform.position).normalized;
 
         // Apply velocity to the axis
         moveDirection.x *= characterStatus.moveSpeed;
@@ -89,9 +100,5 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = velocity;
     }
 
-    bool CanMove()
-    {
-        return GetComponent<CombatHandler>().isCasting == false;
-    }
 
 }
