@@ -75,8 +75,8 @@ public class SwordSlash_ISkill : MonoBehaviour, ISkill
         GetComponent<ParticleSystem>().Play();
 
         // Apply this skill effect
-        if (skill.target.GetComponent<CombatHandler>() != null)
-            skill.target.GetComponent<CombatHandler>().TakeHitFrom(skill);
+        if (skill.target.GetComponent<CharacterCombat>() != null)
+            skill.target.GetComponent<CharacterCombat>().TakeHitFrom(skill);
 
     }
 

@@ -5,12 +5,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class CombatHandler : MonoBehaviour
+public class CharacterCombat : MonoBehaviour
 {
 
+    [HideInInspector]
     public Skill selectedSkill;
+    [HideInInspector]
     public Transform target;
-
     [HideInInspector]
     public bool isCasting = false;
 
@@ -18,7 +19,7 @@ public class CombatHandler : MonoBehaviour
     CharacterStatus characterStatus;
     Transform damageDisplay; // pensar numa forma otimizada
 
-    void Start()
+    protected void Start()
     {
         animator = GetComponent<Animator>();
         characterStatus = GetComponent<CharacterStatus>();

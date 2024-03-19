@@ -1,29 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : CharacterCombat
 {
 
-    public static bool isFighting = false;
-    public static bool canAttack = true;
-
     PlayerMove playerMove;
-    CharacterStatus characterStatus;
-    CombatHandler combatHandler;
     CharacterSkills characterSkills;
     List<Skill> skillsList;
 
-    // Stored last skill pressed to cast when its available
-    //public static Skill selectedSkill = null;
-
     void Start()
     {
+        base.Start();
         playerMove = GetComponent<PlayerMove>();
-        characterStatus = GetComponent<CharacterStatus>();
-        combatHandler = GetComponent<CombatHandler>();
         characterSkills = GetComponent<CharacterSkills>();
         skillsList = characterSkills.skills;
     }
@@ -37,7 +25,7 @@ public class PlayerCombat : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
             {
                 int input = i - 1;
-                combatHandler.selectedSkill = skillsList[input];
+                base.selectedSkill = skillsList[input];
             }
         }
 
@@ -51,21 +39,21 @@ public class PlayerCombat : MonoBehaviour
     void HandleAttack()
     {
 
-        if (combatHandler.selectedSkill == null)
+        if (base.selectedSkill == null)
             return;
         if (GetComponent<PlayerState>().state == PlayerState.State.Casting)
         {
             HUD.SetMessageDebug("Você ainda está castando uma skill, aguarde...");
-            combatHandler.selectedSkill = null;
+            base.selectedSkill = null;
             return;
         }
 
-        combatHandler.selectedSkill.caster = transform;
-        combatHandler.selectedSkill.target = PlayerInput.selectedTarget;
+        base.selectedSkill.caster = transform;
+        base.selectedSkill.target = PlayerInput.selectedTarget;
 
-        combatHandler.target = PlayerInput.selectedTarget;
+        base.target = PlayerInput.selectedTarget;
 
-        bool isTargetInCasterRange = combatHandler.selectedSkill.IsTargetInCasterRange();
+        bool isTargetInCasterRange = base.selectedSkill.IsTargetInCasterRange();
         //bool isSkillReady = combatHandler.selectedSkill.IsSkillReady();
 
         if (isTargetInCasterRange == false)
@@ -73,13 +61,18 @@ public class PlayerCombat : MonoBehaviour
             playerMove.followSelectedTarget = true;
         }
 
-        if (combatHandler.selectedSkill.CanCastSkill())
+        if (base.selectedSkill.CanCastSkill())
         {
-            Utils.LookAtYZ(transform, combatHandler.selectedSkill.target.position);
-            combatHandler.selectedSkill.CastSkill();
+            // Para de seguir o inimigo
             playerMove.followSelectedTarget = false;
-            StartCoroutine(GetComponent<PlayerState>().SwitchStateForDuration(PlayerState.State.Casting, PlayerState.State.Idle, combatHandler.selectedSkill.castingTime));
-            combatHandler.selectedSkill = null;
+            // Vira o jogador em direção ao alvo
+            Utils.LookAtYZ(transform, base.selectedSkill.target.position);
+            // Inicia o trigger da skill
+            base.selectedSkill.CastSkill();
+            // Alterna os estados de casting para que o jogador pare de se mover
+            StartCoroutine(GetComponent<PlayerState>().SwitchStateForDuration(PlayerState.State.Casting, PlayerState.State.Idle, base.selectedSkill.castingTime));
+            // Limpa a skill do cache
+            base.selectedSkill = null;
         }
     }
 

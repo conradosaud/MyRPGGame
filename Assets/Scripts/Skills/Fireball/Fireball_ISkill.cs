@@ -107,8 +107,8 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
     {
         if (collider.transform == skill.target)
         {
-            if (collider.GetComponent<CombatHandler>() != null)
-                collider.GetComponent<CombatHandler>().TakeHitFrom(skill);
+            if (collider.GetComponent<CharacterCombat>() != null)
+                collider.GetComponent<CharacterCombat>().TakeHitFrom(skill);
             Destroy(gameObject);
         }
     }

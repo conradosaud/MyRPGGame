@@ -24,7 +24,6 @@ public class EnemyMove : MonoBehaviour
     EnemyAI enemyAI;
     EnemyCombat enemyCombat;
     Transform player;
-    CombatHandler combatHandler;
 
     Vector3 destiny;
     Vector3 moveDirection;
@@ -38,7 +37,6 @@ public class EnemyMove : MonoBehaviour
         enemyAI = GetComponent<EnemyAI>();
         enemyCombat = GetComponent<EnemyCombat>();
         player = GameObject.FindWithTag("Player").transform;
-        combatHandler = GetComponent<CombatHandler>();
 
         patrolAreaBounds = transform.Find("PatrolArea").GetComponent<Renderer>().bounds;
     }
@@ -53,7 +51,7 @@ public class EnemyMove : MonoBehaviour
         {
             if (followSelectedTarget)
             {
-                Move(combatHandler.target.position);
+                Move(enemyCombat.target.position);
             }
 
             return;
@@ -101,9 +99,9 @@ public class EnemyMove : MonoBehaviour
         if (CanRun() == false)
             return;
 
-        if(combatHandler.target != null)
+        if(enemyCombat.target != null)
         {
-            float offsetDistance = Vector3.Distance(transform.position, combatHandler.target.position);
+            float offsetDistance = Vector3.Distance(transform.position, enemyCombat.target.position);
             if (offsetDistance < characterStatus.range)
                 return;
         }
@@ -153,7 +151,7 @@ public class EnemyMove : MonoBehaviour
 
     bool CanRun()
     {
-        return combatHandler.isCasting == false;
+        return enemyCombat.isCasting == false;
     }
     
 }

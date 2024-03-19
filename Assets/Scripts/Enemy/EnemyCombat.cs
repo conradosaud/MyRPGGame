@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCombat : MonoBehaviour
+public class EnemyCombat : CharacterCombat
 {
 
+    public bool isFighting = false;
+
     EnemyMove enemyMove;
-    CombatHandler combatHandler;
     CharacterSkills characterSkills;
 
-    public bool isFighting = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         enemyMove = GetComponent<EnemyMove>();
-        combatHandler = GetComponent<CombatHandler>();
         characterSkills = GetComponent<CharacterSkills>();   
     }
 
@@ -24,7 +24,7 @@ public class EnemyCombat : MonoBehaviour
     {
         if( isFighting)
         {
-            combatHandler.selectedSkill = GetAvailableSkill();
+            base.selectedSkill = GetAvailableSkill();
             HandleAttack();
         }
 
@@ -35,32 +35,32 @@ public class EnemyCombat : MonoBehaviour
     void HandleAttack()
     {
 
-        if (combatHandler.selectedSkill == null)
+        if (base.selectedSkill == null)
             return;
         if (GetComponent<EnemyState>().state == EnemyState.State.Casting)
         {
-            combatHandler.selectedSkill = null;
+            base.selectedSkill = null;
             return;
         }
 
-        combatHandler.selectedSkill.caster = transform;
-        combatHandler.selectedSkill.target = combatHandler.target;
+        base.selectedSkill.caster = transform;
+        base.selectedSkill.target = base.target;
 
-        bool isTargetInCasterRange = combatHandler.selectedSkill.IsTargetInCasterRange();
+        bool isTargetInCasterRange = base.selectedSkill.IsTargetInCasterRange();
 
         if (isTargetInCasterRange == false)
         {
             enemyMove.followSelectedTarget = true;
         }
 
-        if (combatHandler.selectedSkill.CanCastSkill())
+        if (base.selectedSkill.CanCastSkill())
         {
 
             enemyMove.followSelectedTarget = false;
-            Utils.LookAtYZ(transform, combatHandler.selectedSkill.target.position);
-            combatHandler.selectedSkill.CastSkill();
-            StartCoroutine(GetComponent<EnemyState>().SwitchStateForDuration(EnemyState.State.Casting, EnemyState.State.Idle, combatHandler.selectedSkill.castingTime));
-            combatHandler.selectedSkill = null;
+            Utils.LookAtYZ(transform, base.selectedSkill.target.position);
+            base.selectedSkill.CastSkill();
+            StartCoroutine(GetComponent<EnemyState>().SwitchStateForDuration(EnemyState.State.Casting, EnemyState.State.Idle, base.selectedSkill.castingTime));
+            base.selectedSkill = null;
 
         }
     }
