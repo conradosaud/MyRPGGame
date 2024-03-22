@@ -7,7 +7,6 @@ public interface ISkill
 
     Skill skill { get; set; }
 
-    void Initiate();
-    void ExecuteCharacterAnimation();
-    void ExecuteSkillAnimation();
+    //void ExecuteCharacterAnimation();
+    //void ExecuteSkillAnimation();
 }

@@ -15,26 +15,6 @@ public class CharacterStatus : MonoBehaviour
 
     public Dictionary<string, Dictionary<string, int>> status = new Dictionary<string, Dictionary<string, int>>();
 
-    public int points_Strength = 10;
-    public int bonus_Strength = 0;
-    public int modifier_Strength = 0;
-
-    public int points_Intelligence = 10;
-    public int bonus_Intelligence = 0;
-    public int modifier_Intelligence = 0;  
-
-    public int points_Defense = 10;
-    public int bonus_Defense = 0;
-    public int modifier_Defense = 0;
-
-    public int points_Resilience = 10;
-    public int bonus_Resilience = 0;
-    public int modifier_Resilience = 0;
-
-    public int points_Vitality = 10;
-    public int bonus_Vitality = 0;
-    public int modifier_Vitality = 0;
-
     private void Start()
     {
 
@@ -48,8 +28,7 @@ public class CharacterStatus : MonoBehaviour
 
         createNewStatus("strength");
         createNewStatus("intelligence");
-        createNewStatus("defense");
-        createNewStatus("resilience");
+        createNewStatus("agility");
         createNewStatus("vitality");
 
     }

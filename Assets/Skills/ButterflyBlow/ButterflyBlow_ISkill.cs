@@ -17,9 +17,9 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
     // -- Custom skill variables]
     public string skillAnimationName;
 
-    public int baseDamage = 20;
-    public float physicalScale = 35;
-    float finalDamage;
+    public int minDamage = 20;
+    public int maxDamage = 28;
+    public float strength = 35;
 
     public float skillStartTime = 0.2f;
     public float firstDamageTime = 0.2f;
@@ -40,11 +40,6 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
          * Tentar resumir melhor todos os arquivos de uma skill
          * - ver se é possível fazer isso tudo dentro de skill diretamente
          */
-
-        int strengthValue = skill.caster.GetComponent<CharacterStatus>().GetStatus("strength");
-        float strengthDamage = strengthValue * (physicalScale / 100);
-        finalDamage = baseDamage + strengthDamage;
-        finalDamage = (float)Math.Floor(finalDamage);
 
         // Initiate this skill configs
         Initiate();
@@ -93,7 +88,17 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
     {
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeDamage((int)finalDamage);
+            skill.target.GetComponent<CharacterCombat>().TakeDamage(GetFinalDamage());
+    }
+
+    int GetFinalDamage()
+    {
+        int damage = UnityEngine.Random.Range(minDamage, maxDamage);
+        int strengthValue = skill.caster.GetComponent<CharacterStatus>().GetStatus("strength");
+        float strengthDamage = strengthValue * (strength / 100);
+        float finalDamage = damage + strengthDamage;
+        finalDamage = (float) Math.Floor(finalDamage);
+        return (int) finalDamage;
     }
 
 }
