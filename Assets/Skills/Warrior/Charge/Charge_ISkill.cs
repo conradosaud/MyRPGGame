@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Security;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
@@ -18,10 +19,13 @@ public class Charge_ISkill : MonoBehaviour, ISkill
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
     public float skillStartTime = 1f;
+    public float timeToCancel = 0.5f;
 
     Rigidbody rb;
     bool startCharge = false;
+    Vector3 lastPosition = Vector3.zero;
 
+    float timeToCancelElapsed = 0;
 
     private void Start()
     {
@@ -41,8 +45,22 @@ public class Charge_ISkill : MonoBehaviour, ISkill
         if (startCharge)
         {
 
+            if (Vector3.Distance(lastPosition, skill.caster.position) < 0.05f)
+            {
+                if (timeToCancelElapsed >= timeToCancel)
+                {
+                    HUD.SetMessageDebug("Tempo m�ximo parado alcan�ado. Habilidade cancelada.");
+                    EndCharge();
+                    return;
+                }
+                timeToCancelElapsed += Time.deltaTime;
+            }
+
+            lastPosition = skill.caster.position;
+
             if (Vector3.Distance(skill.caster.position, skill.target.position) < 2f)
             {
+                SkillDamage();
                 EndCharge();
                 return;
             }
@@ -50,7 +68,6 @@ public class Charge_ISkill : MonoBehaviour, ISkill
             rb = skill.caster.GetComponent<Rigidbody>();
             PlayerMove move = skill.caster.GetComponent<PlayerMove>();
             CharacterStatus characterStatus = skill.caster.GetComponent<CharacterStatus>();
-            //rb.velocity = Vector3.MoveTowards( skill.caster.position, skill.target.position,  characterStatus.moveSpeed + skill.velocity * Time.deltaTime);
 
             Vector3 moveDirection = skill.target.position;
             // Look to destiny point
@@ -64,6 +81,9 @@ public class Charge_ISkill : MonoBehaviour, ISkill
             // Update the velocity of the rigidbody
             Vector3 velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
             rb.velocity = velocity;
+            //Vector3 casterPosition = skill.caster.position;
+            Vector3 casterPosition = SkillUtilities.GetCasterCenterPosition(skill);
+            transform.position = casterPosition;
         }
     }
 
@@ -87,8 +107,6 @@ public class Charge_ISkill : MonoBehaviour, ISkill
         }
 
         StartCharge();
-        //Invoke("StartCharge", 1.5f);
-        
 
     }
 
@@ -102,8 +120,7 @@ public class Charge_ISkill : MonoBehaviour, ISkill
     {
         startCharge = false;
         skill.caster.GetComponent<Animator>().Play("Idle");
-        // TODO : AJUSTAR ISSO PARA QUANDO ACERTAR O ALVO APENAS
-        SkillDamage();
+        Destroy(gameObject);
     }
 
     void SkillDamage()
@@ -112,17 +129,6 @@ public class Charge_ISkill : MonoBehaviour, ISkill
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
             skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
-    }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("opae");
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        Debug.Log("opae22222");
     }
 
 }

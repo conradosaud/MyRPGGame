@@ -20,11 +20,11 @@ MonoBehaviour:
   castingTime: 0
   countdownElapsed: 2
   minRange: 2
-  maxRange: 10
+  maxRange: 20
   velocity: 5
-  minDamage: 1
-  maxDamage: 2
+  minDamage: 50
+  maxDamage: 50
   strength: 0
   intelligence: 0
-  agility: 0
+  agility: 0.1
   vitality: 0

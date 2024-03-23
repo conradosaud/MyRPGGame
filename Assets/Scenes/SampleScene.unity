@@ -1053,6 +1053,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62f1b1d2d1ed9274eada86a93131f041, type: 2}
   - {fileID: 11400000, guid: 05b1514202ea7a8489e13571f680c6b3, type: 2}
   - {fileID: 11400000, guid: b0991677d7d958544a5a64738c7179a5, type: 2}
+  - {fileID: 11400000, guid: 80bc4baa6bed32945a381da9e206b0cc, type: 2}
 --- !u!114 &210442786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,22 +1216,6 @@ MonoBehaviour:
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
-  points_Strength: 10
-  bonus_Strength: 0
-  modifier_Strength: 0
-  points_Intelligence: 10
-  bonus_Intelligence: 0
-  modifier_Intelligence: 0
-  points_Defense: 10
-  bonus_Defense: 0
-  modifier_Defense: 0
-  points_Resilience: 10
-  bonus_Resilience: 0
-  modifier_Resilience: 0
-  points_Vitality: 10
-  bonus_Vitality: 0
-  modifier_Vitality: 0
-  characterStatus: {fileID: 0}
 --- !u!1 &239022697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3416,21 +3401,6 @@ MonoBehaviour:
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
-  points_Strength: 10
-  bonus_Strength: 0
-  modifier_Strength: 0
-  points_Intelligence: 10
-  bonus_Intelligence: 0
-  modifier_Intelligence: 0
-  points_Defense: 10
-  bonus_Defense: 0
-  modifier_Defense: 0
-  points_Resilience: 10
-  bonus_Resilience: 0
-  modifier_Resilience: 0
-  points_Vitality: 10
-  bonus_Vitality: 0
-  modifier_Vitality: 0
 --- !u!114 &1765323535
 MonoBehaviour:
   m_ObjectHideFlags: 0
