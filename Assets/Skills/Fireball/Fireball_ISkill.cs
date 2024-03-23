@@ -7,15 +7,13 @@ using static UnityEngine.GraphicsBuffer;
 public class Fireball_ISkill : MonoBehaviour, ISkill
 {
 
-    // Skill casted
+    // Skill interface refering to original casted skill
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
     // -- This skill custom variables
     public AnimationClip casterAnimationClip;
-    public float skillStartTime = 0.5f;
-    public float velocity = 3f;
-    
+    public float skillStartTime = 0.5f;    
 
     public float zOffset = 1.5f;
     Vector3 offset;
@@ -52,7 +50,7 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
         }
 
         // Change this prefab position to follow the target
-        Vector3 moveDirection = Vector3.MoveTowards(transform.position, skill.target.position, velocity * Time.deltaTime);
+        Vector3 moveDirection = Vector3.MoveTowards(transform.position, skill.target.position, skill.velocity * Time.deltaTime);
         moveDirection.y = SkillUtilities.GetCasterCenterY(skill);
         transform.position = moveDirection;
 
@@ -108,7 +106,7 @@ public class Fireball_ISkill : MonoBehaviour, ISkill
         if (collider.transform == skill.target)
         {
             if (collider.GetComponent<CharacterCombat>() != null)
-                collider.GetComponent<CharacterCombat>().TakeHitFrom(skill);
+                collider.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
             Destroy(gameObject);
         }
     }

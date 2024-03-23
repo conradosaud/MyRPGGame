@@ -1,33 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "Custom Item", menuName = "New Skill", order = 2)]
+//[CreateAssetMenu(fileName = "Custom Item", menuName = "New Skill", order = 2)]
 public class Skill : ScriptableObject
 {
 
-    public string name = "Skill";
-    public int damage = 1;
-    public float countdown = 1;
-    public int range = 2;
-    public float castingTime = 0;
+    public Transform skillPrefab = null;
 
-    //[HideInInspector]
-    public float countdownElapsed = 0;
     [HideInInspector]
     public Transform caster = null;
-
-
-    public bool isProjectile = false;
-    public bool canMoveOnCast = false;
-
-    //public AnimationClip animationClip;
-    public Transform skillPrefab = null;
     [HideInInspector]
     public Transform target = null;
+
+    [Header("Main settings")]
+    public string name = "Skill";
+    public float countdown = 1;
+    [Tooltip("Time it takes for the character to perform the skill action. During this period, he will not be able to walk.")]
+    public float castingTime = 0;
+    [HideInInspector] public float countdownElapsed = 0;
+
+    [Header("Range")]
+    public int minRange = 2;
+    public int maxRange = 2;
+    
+    [Header("Projectil")]
+    public float velocity = 5;
+
+    [Header("Damage and Heal")]
+    public int minDamage = 0;
+    public int maxDamage = 0;
+
+    [Header("Attributes Scale")]
+    public float strength = 0;
+    public float intelligence = 0;
+    public float agility = 0;
+    public float vitality = 0;
+
 
     // Check if the target is in the of caster
     public bool IsTargetInCasterRange()
@@ -42,9 +55,9 @@ public class Skill : ScriptableObject
         float distance = Vector3.Distance(caster.position, target.position);
 
         if( Constants.DEV && caster.CompareTag("Player") )
-            HUD.SetMessageDebug($"Skill [{name}] fora de alcance — Distancia [{distance.ToString("0.0")}] | Alcance {range}");
+            HUD.SetMessageDebug($"Skill [{name}] fora de alcance — Distancia [{distance.ToString("0.0")}] | Alcance {maxRange}");
         
-        return distance <= range;
+        return distance <= maxRange;
 
     }
 
@@ -73,6 +86,26 @@ public class Skill : ScriptableObject
         Transform instantiated = Instantiate( skillPrefab, Path.skillPool );
         instantiated.GetComponent<ISkill>().skill = this;
         countdownElapsed = countdown;
+    }
+
+    public int GetDamage()
+    {
+        
+        int baseDamage = UnityEngine.Random.Range(minDamage, maxDamage);
+        
+        int casterStrength = caster.GetComponent<CharacterStatus>().GetStatus("strength");
+        int casterIntelligence = caster.GetComponent<CharacterStatus>().GetStatus("intelligence");
+        int casterAgility = caster.GetComponent<CharacterStatus>().GetStatus("agility");
+        
+        float strengthDamage = casterStrength * strength;
+        float intelligenceDamage = casterIntelligence * strength;
+        float agilityDamage = casterAgility * strength;
+
+        float finalDamage = baseDamage + ( strengthDamage + intelligenceDamage + agilityDamage );
+        finalDamage = (float)Math.Floor(finalDamage);
+
+        return (int)finalDamage;
+        
     }
 
 }

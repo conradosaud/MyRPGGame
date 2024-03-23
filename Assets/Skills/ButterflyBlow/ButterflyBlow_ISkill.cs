@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static UnityEngine.GraphicsBuffer;
@@ -10,16 +11,12 @@ using static UnityEngine.GraphicsBuffer;
 public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
 {
 
-    // Skill casted
+    // Skill interface refering to original casted skill
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
-    // -- Custom skill variables]
+    // -- Custom skill variables
     public string skillAnimationName;
-
-    public int minDamage = 20;
-    public int maxDamage = 28;
-    public float strength = 35;
 
     public float skillStartTime = 0.2f;
     public float firstDamageTime = 0.2f;
@@ -33,31 +30,11 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
             return;
         SkillUtilities.ShowHUDCastMessage(skill);
 
-        /*
-         * TODO:
-         * Adicionar dano mínimo e máximo
-         * Remover initiate da interface
-         * Tentar resumir melhor todos os arquivos de uma skill
-         * - ver se é possível fazer isso tudo dentro de skill diretamente
-         */
-
         // Initiate this skill configs
-        Initiate();
-
-    }
-
-
-    // --------- - ISkill interface functions - ---------
-
-    public void Initiate()
-    {
-
-        // Positionate this prefab on caster center
-        transform.position = SkillUtilities.GetTargetCenterPosition(skill);
-
-        // Always call the beginning of the character's animation
         ExecuteCharacterAnimation();
+
     }
+
 
     public void ExecuteCharacterAnimation()
     {
@@ -86,19 +63,11 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
 
     void SkillDamage()
     {
+        transform.position = SkillUtilities.GetTargetCenterPosition(skill);
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeDamage(GetFinalDamage());
+            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
     }
 
-    int GetFinalDamage()
-    {
-        int damage = UnityEngine.Random.Range(minDamage, maxDamage);
-        int strengthValue = skill.caster.GetComponent<CharacterStatus>().GetStatus("strength");
-        float strengthDamage = strengthValue * (strength / 100);
-        float finalDamage = damage + strengthDamage;
-        finalDamage = (float) Math.Floor(finalDamage);
-        return (int) finalDamage;
-    }
 
 }

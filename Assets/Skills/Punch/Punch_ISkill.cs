@@ -10,7 +10,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Punch_ISkill : MonoBehaviour, ISkill
 {
 
-    // Skill casted
+    // Skill interface refering to original casted skill
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
@@ -27,21 +27,8 @@ public class Punch_ISkill : MonoBehaviour, ISkill
         SkillUtilities.ShowHUDCastMessage(skill);
 
         // Initiate this skill configs
-        Initiate();
-
-    }
-
-
-    // --------- - ISkill interface functions - ---------
-
-    public void Initiate()
-    {
-
-        // Positionate this prefab on caster center
-        transform.position = SkillUtilities.GetTargetCenterPosition(skill);
-
-        // Always call the beginning of the character's animation
         ExecuteCharacterAnimation();
+
     }
 
     public void ExecuteCharacterAnimation()
@@ -64,12 +51,14 @@ public class Punch_ISkill : MonoBehaviour, ISkill
             return;
         }
 
+        // Positionate this prefab on caster center
+        transform.position = SkillUtilities.GetTargetCenterPosition(skill);
         // Start the particles system. If it has a mesh, shoud be enabled here
         GetComponent<ParticleSystem>().Play();
 
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeHitFrom(skill);
+            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
 
     }
 

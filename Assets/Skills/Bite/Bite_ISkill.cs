@@ -10,7 +10,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Bite_ISkill : MonoBehaviour, ISkill
 {
 
-    // Skill casted
+    // Skill interface refering to original casted skill
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
@@ -26,17 +26,8 @@ public class Bite_ISkill : MonoBehaviour, ISkill
             return;
 
         // Initiate this skill configs
-        Initiate();
-
-    }
-
-
-    // --------- - ISkill interface functions - ---------
-
-    public void Initiate()
-    {
-        // Always call the beginning of the character's animation
         ExecuteCharacterAnimation();
+
     }
 
     public void ExecuteCharacterAnimation()
@@ -67,7 +58,7 @@ public class Bite_ISkill : MonoBehaviour, ISkill
 
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeHitFrom(skill);
+            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
 
     }
 

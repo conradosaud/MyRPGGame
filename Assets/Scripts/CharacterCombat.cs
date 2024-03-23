@@ -29,7 +29,7 @@ public class CharacterCombat : MonoBehaviour
     // Rever o conceito dessa função e se ela é relevante ela existir
     public bool TakeHitFrom(Skill skill)
     {
-        TakeDamage(skill.damage);
+        //TakeDamage(skill.damage);
         return true;
     }
 
