@@ -10,16 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
-  m_Name: ButterflyBlow_Skill
+  m_Name: Charge_Skill
   m_EditorClassIdentifier: 
-  name: Butterfly Blow
-  damage: 3
-  countdown: 2
-  range: 2
-  castingTime: 1.5
-  countdownElapsed: 2
+  skillPrefab: {fileID: 2164382971086557419, guid: 7fe93153c94ff364b93a681bcba673e8, type: 3}
   caster: {fileID: 0}
-  isProjectile: 0
-  canMoveOnCast: 0
-  skillPrefab: {fileID: 2164382971086557419, guid: 4fbfabe6400d72247a1fb32108f55e10, type: 3}
   target: {fileID: 0}
+  name: Charge
+  countdown: 1
+  castingTime: 0
+  countdownElapsed: 2
+  minRange: 2
+  maxRange: 10
+  velocity: 5
+  minDamage: 1
+  maxDamage: 2
+  strength: 0
+  intelligence: 0
+  agility: 0
+  vitality: 0

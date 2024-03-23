@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
   m_Name: Claw_Skill
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 6380027877799359609, guid: f9f2efdc2641795488aaf79c0b0f7a5e, type: 3}
+  caster: {fileID: 0}
+  target: {fileID: 0}
   name: Claw
-  damage: 3
   countdown: 8
-  range: 4
   castingTime: 3
   countdownElapsed: 0
-  caster: {fileID: 0}
-  isProjectile: 0
-  canMoveOnCast: 0
-  skillPrefab: {fileID: 6380027877799359609, guid: f9f2efdc2641795488aaf79c0b0f7a5e, type: 3}
-  target: {fileID: 0}
+  minRange: 2
+  maxRange: 4
+  velocity: 5
+  minDamage: 3
+  maxDamage: 4
+  strength: 0
+  intelligence: 0
+  agility: 0
+  vitality: 0

@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
   m_Name: Bite_Skill
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 8665491710636597358, guid: 17c325e9cdb6d634682c2162d672f379, type: 3}
+  caster: {fileID: 0}
+  target: {fileID: 0}
   name: Bite
-  damage: 1
   countdown: 4
-  range: 2
   castingTime: 2.5
   countdownElapsed: 0
-  caster: {fileID: 0}
-  isProjectile: 0
-  canMoveOnCast: 0
-  skillPrefab: {fileID: 8665491710636597358, guid: 17c325e9cdb6d634682c2162d672f379, type: 3}
-  target: {fileID: 0}
+  minRange: 2
+  maxRange: 2
+  velocity: 5
+  minDamage: 2
+  maxDamage: 4
+  strength: 0
+  intelligence: 0
+  agility: 0
+  vitality: 0

@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
   m_Name: Fireball_Skill
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}
+  caster: {fileID: 0}
+  target: {fileID: 0}
   name: Fireball
-  damage: 3
   countdown: 1.5
-  range: 10
   castingTime: 1.5
   countdownElapsed: -0.01999874
-  caster: {fileID: 0}
-  isProjectile: 1
-  canMoveOnCast: 0
-  skillPrefab: {fileID: 9136692291095263213, guid: 022095a6bd3650a4d8ba9564d7e1afec, type: 3}
-  target: {fileID: 0}
+  minRange: 2
+  maxRange: 5
+  velocity: 5
+  minDamage: 4
+  maxDamage: 8
+  strength: 0
+  intelligence: 0
+  agility: 0
+  vitality: 0

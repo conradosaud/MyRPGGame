@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
         
     }
 
-    void Move( Vector3 moveDirection )
+    public void Move( Vector3 moveDirection )
     {
 
         if ( playerState.CanMove() == false )
