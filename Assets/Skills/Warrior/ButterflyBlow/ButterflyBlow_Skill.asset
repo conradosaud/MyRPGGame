@@ -17,7 +17,7 @@ MonoBehaviour:
   target: {fileID: 0}
   name: Butterfly Blow
   countdown: 2
-  castingTime: 0
+  castingTime: 1.2
   countdownElapsed: 2
   minRange: 2
   maxRange: 2

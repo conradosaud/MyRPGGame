@@ -17,7 +17,7 @@ MonoBehaviour:
   target: {fileID: 0}
   name: Magic Blades
   countdown: 1
-  castingTime: 0
+  castingTime: 1.2
   countdownElapsed: 2
   minRange: 2
   maxRange: 3
