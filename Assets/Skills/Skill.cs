@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-//[CreateAssetMenu(fileName = "Custom Item", menuName = "New Skill", order = 2)]
+[CreateAssetMenu(fileName = "Custom Item", menuName = "New Skill", order = 0)]
 public class Skill : ScriptableObject
 {
 
