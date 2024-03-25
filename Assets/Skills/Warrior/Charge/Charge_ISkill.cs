@@ -35,6 +35,9 @@ public class Charge_ISkill : MonoBehaviour, ISkill
             return;
         SkillUtilities.ShowHUDCastMessage(skill);
 
+        transform.position = skill.caster.position;
+        transform.GetComponent<Collider>().bounds.Encapsulate(skill.caster.GetComponent<Collider>().bounds);
+
         // Initiate this skill configs
         ExecuteCharacterAnimation();
 
@@ -112,8 +115,8 @@ public class Charge_ISkill : MonoBehaviour, ISkill
 
     void StartCharge()
     {
-        transform.GetComponent<Collider>().bounds.Encapsulate(skill.caster.GetComponent<Collider>().bounds);
         startCharge = true;
+        GetComponent<ParticleSystem>().Play();
     }
 
     void EndCharge()
