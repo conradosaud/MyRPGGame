@@ -16,6 +16,7 @@ MonoBehaviour:
   caster: {fileID: 0}
   target: {fileID: 0}
   name: Punch
+  icon: {fileID: 2800000, guid: 2792685aacfb6e241bf251c26c30ee8c, type: 3}
   countdown: 1.3
   castingTime: 1
   countdownElapsed: 0

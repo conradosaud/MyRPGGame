@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //[CreateAssetMenu(fileName = "Custom Item", menuName = "New Skill", order = 2)]
@@ -19,6 +20,7 @@ public class Skill : ScriptableObject
 
     [Header("Main settings")]
     public string name = "Skill";
+    public Texture icon = null;
     public float countdown = 1;
     [Tooltip("Time it takes for the character to perform the skill action. During this period, he will not be able to walk.")]
     public float castingTime = 0;

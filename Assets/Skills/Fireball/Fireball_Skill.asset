@@ -16,6 +16,7 @@ MonoBehaviour:
   caster: {fileID: 0}
   target: {fileID: 0}
   name: Fireball
+  icon: {fileID: 2800000, guid: bae4104b14186ef44a8317e000676a41, type: 3}
   countdown: 1.5
   castingTime: 1.5
   countdownElapsed: -0.01999874
