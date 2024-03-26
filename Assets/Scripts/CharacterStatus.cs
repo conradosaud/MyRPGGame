@@ -7,8 +7,10 @@ public class CharacterStatus : MonoBehaviour
 {
 
     public string name = "None";
-    public int healthPoints = 100;
-    public int manaPoints = 50;
+    public int currentLife = 100;
+    [HideInInspector] public int maximumLife = 100;
+    public int currentMana = 50;
+    [HideInInspector] public int maximumMana = 50;
     public float range = Constants.rangeDistanceOffset;
     public float attackSpeed = 0.3f;
     public float moveSpeed = 5;

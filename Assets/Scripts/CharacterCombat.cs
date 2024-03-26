@@ -35,16 +35,21 @@ public class CharacterCombat : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        characterStatus.healthPoints -= damage;
+        characterStatus.currentLife -= damage;
+        HUD.UpdateLifebar();
         DisplayDamage(damage);
-
         verifyIsDead();
+    }
 
+    public void ConsumeMana(int value)
+    {
+        characterStatus.currentMana -= value;
+        HUD.UpdateManabar();
     }
 
     void verifyIsDead()
     {
-        if (characterStatus.healthPoints <= 0)
+        if (characterStatus.currentLife <= 0)
         {
             HUD.SetMessageDebug($"O alvo [{characterStatus.name}] está morto");
             Destroy(gameObject);

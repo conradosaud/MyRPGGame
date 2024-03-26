@@ -25,6 +25,7 @@ public class Skill : ScriptableObject
     [Tooltip("Time it takes for the character to perform the skill action. During this period, he will not be able to walk.")]
     public float castingTime = 0;
     [HideInInspector] public float countdownElapsed = 0;
+    public int manaCost = 0;
 
     [Header("Range")]
     public int minRange = 2;
@@ -76,15 +77,21 @@ public class Skill : ScriptableObject
 
     }
 
+    public bool HasMana()
+    {
+        return caster.GetComponent<CharacterStatus>().currentMana >= manaCost;
+    }
+
     // Check if range and countdown is OK to be casted
     public bool CanCastSkill()
     {
-        return IsTargetInCasterRange() && IsSkillReady();
+        return IsTargetInCasterRange() && IsSkillReady() && HasMana();
     }
 
     // Uses the skill
     public void CastSkill()
     {
+        caster.GetComponent<CharacterCombat>().ConsumeMana(manaCost);
         Transform instantiated = Instantiate( skillPrefab, Path.skillPool );
         instantiated.GetComponent<ISkill>().skill = this;
         countdownElapsed = countdown;
