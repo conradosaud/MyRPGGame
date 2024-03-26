@@ -17,7 +17,7 @@ MonoBehaviour:
   target: {fileID: 0}
   name: Magic Blades
   icon: {fileID: 2800000, guid: 434c02f77de62c9478a480f1714c4545, type: 3}
-  countdown: 1
+  countdown: 6
   castingTime: 1.2
   countdownElapsed: 2
   minRange: 2
