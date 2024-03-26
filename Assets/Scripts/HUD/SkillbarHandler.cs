@@ -19,8 +19,6 @@ public class SkillbarHandler : MonoBehaviour
     const string skillbarSlotName = "SkillSlot_";
     float skillbarSlotSize = 65;
 
-    float elapsed = 5;
-
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -35,7 +33,6 @@ public class SkillbarHandler : MonoBehaviour
 
     }
 
-    
     private void FixedUpdate()
     {
         // Decides if is a better way call here or inside de "CastSkill" on combat script
@@ -44,36 +41,38 @@ public class SkillbarHandler : MonoBehaviour
 
     public void UpdateSkillbar()
     {
+
         for (int i = 0; i < skills.Count; i++)
         {
 
             Skill skill = skills[i];
 
+            if (skill.countdownElapsed <= 0)
+                continue;
+            
+            skill.countdownElapsed -= Time.deltaTime;
+
+            // Add a HUD script
+            Transform slot = skillbar.GetChild(i);
+            Color color = slot.Find("IconImage").GetComponent<RawImage>().color;
             if (skill.countdownElapsed > 0)
             {
-
-                skill.countdownElapsed -= Time.deltaTime;
-
-                // Add a HUD script
-                Transform slot = skillbar.GetChild(i);
-                Color color = slot.Find("IconImage").GetComponent<RawImage>().color;
-                if (skill.countdownElapsed > 0)
-                {
-                    color.a = 0.3f;
-                    slot.Find("IconImage").GetComponent<RawImage>().color = color;
-                    slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().text = skill.countdownElapsed.ToString("0.0");
-                    slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().enabled = true;
-                    UpdateCountdownOverride( skill, i );
-                }
-                else
-                {
-                    color.a = 1;
-                    slot.Find("IconImage").GetComponent<RawImage>().color = color;
-                    slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().enabled = false;
-                    ResetCountdownOverride(i);
-                }
-
+                color.a = 0.3f;
+                slot.Find("IconImage").GetComponent<RawImage>().color = color;
+                slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().text = skill.countdownElapsed.ToString("0.0");
+                slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().enabled = true;
+                UpdateCountdownOverride( skill, i );
             }
+            else
+            {
+                color.a = 1;
+                slot.Find("IconImage").GetComponent<RawImage>().color = color;
+                slot.Find("TextTimer").GetComponent<TextMeshProUGUI>().enabled = false;
+                ResetCountdownOverride(i);
+            }
+
+
+            
         }
     }
 
