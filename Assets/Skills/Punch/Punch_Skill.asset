@@ -17,14 +17,14 @@ MonoBehaviour:
   target: {fileID: 0}
   name: Punch
   icon: {fileID: 2800000, guid: 2792685aacfb6e241bf251c26c30ee8c, type: 3}
-  countdown: 1.3
+  countdown: 1
   castingTime: 1
   countdownElapsed: 0
   minRange: 2
   maxRange: 2
   velocity: 5
-  minDamage: 1
-  maxDamage: 3
+  minDamage: 10
+  maxDamage: 20
   strength: 0
   intelligence: 0
   agility: 0
