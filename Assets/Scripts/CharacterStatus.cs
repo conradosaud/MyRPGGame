@@ -52,10 +52,12 @@ public class CharacterStatus : MonoBehaviour
 
     private Dictionary<int, int> experiencePerLevelTable = new Dictionary<int, int>()
     {
-        { 1, 0 },    // Nível 1 requer 0 de experiência
-        { 2, 100 },  // Nível 2 requer 100 de experiência
-        { 3, 200 },  // Nível 3 requer 200 de experiência
-        // Adicione mais níveis e experiência conforme necessário
+        { 1, 0 },
+        { 2, 100 },
+        { 3, 200 },
+        { 4, 300 },
+        { 5, 400 },
+        { 6, 500 }
     };
 
     private void Start()
@@ -146,36 +148,23 @@ public class CharacterStatus : MonoBehaviour
         experienceAccumulated += value;
 
         // Verifica se o personagem alcançou ou ultrapassou a quantidade de experiência necessária para o próximo nível
-        while (experienceAccumulated >= ExperienceToNextLevel(level))
+        if (experienceAccumulated >= experiencePerLevelTable[level+1] )
         {
             // Incrementa o nível do personagem
-            level++;
-            Debug.Log("Subiu de level");
-
-            // Se o próximo nível não estiver na tabela de experiência, encerra o loop
-            if (!experiencePerLevelTable.ContainsKey(level))
-            {
-                break;
-            }
-
             // Subtrai a experiência necessária para alcançar o próximo nível da experiência atual
+            LevelUp();
             experienceAccumulated -= experiencePerLevelTable[level];
         }
+
+        HUD.UpdateExperiencebar(experienceAccumulated, experiencePerLevelTable[level]);
+
     }
 
-    private int ExperienceToNextLevel(int level)
+    void LevelUp()
     {
-        // Se o nível estiver na tabela de experiência, retorna a quantidade de experiência necessária
-        if (experiencePerLevelTable.ContainsKey(level))
-        {
-            return experiencePerLevelTable[level];
-        }
-        // Se o nível não estiver na tabela, retorna um valor padrão (ou lida com o erro de alguma outra forma)
-        else
-        {
-            Debug.LogWarning("Nível não encontrado na tabela de experiência. Nível: " + level);
-            return -1; // Ou outro valor padrão de sua escolha
-        }
+        level++;
+        Debug.Log("Subiu de level");
+        HUD.UpdateLevelContent(level);
     }
 
 }

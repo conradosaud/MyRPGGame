@@ -21,12 +21,15 @@ public class HUD : MonoBehaviour
     public static RectTransform manabar;
     public static TextMeshProUGUI currentMana;
     public static TextMeshProUGUI maximumMana;
+    public static RectTransform levelPanel;
+    public static TextMeshProUGUI levelText;
+    public static RectTransform levelbarValue;
 
     public static float lifebarOriginalWidth = 0;
     public static float lifebarOriginalHeight = 0;
     public static float manabarOriginalWidth = 0;
     public static float manabarOriginalHeight = 0;
-
+    public static float levelbarOriginalWidth = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +50,16 @@ public class HUD : MonoBehaviour
         maximumLife = healthbar.Find("Life").Find("Text").Find("Maximum").GetComponent<TextMeshProUGUI>();
         currentMana = healthbar.Find("Mana").Find("Text").Find("Current").GetComponent<TextMeshProUGUI>();
         maximumMana = healthbar.Find("Mana").Find("Text").Find("Maximum").GetComponent<TextMeshProUGUI>();
+        levelPanel = hud.Find("LevelPanel").GetComponent<RectTransform>();
+        levelText = levelPanel.Find("LevelContent").Find("Text").GetComponent<TextMeshProUGUI>();
+        levelbarValue = levelPanel.Find("Levelbar").Find("LevelbarValue").GetComponent<RectTransform>();
 
         lifebarOriginalWidth = lifebar.sizeDelta.x;
         lifebarOriginalHeight = lifebar.sizeDelta.y;
         manabarOriginalWidth = manabar.sizeDelta.x;
         manabarOriginalHeight = manabar.sizeDelta.y;
+        levelbarOriginalWidth = levelPanel.Find("Levelbar").Find("LevelBackground")
+            .GetComponent<RectTransform>().sizeDelta.x;
 
         // Prevent stop the player. Check to fix it later
         if (gameManager == null)
@@ -88,6 +96,18 @@ public class HUD : MonoBehaviour
         maximumMana.text = maximumManaNumber.ToString();
         float x = manabarOriginalWidth * ((float)currentManaNumber / (float)maximumManaNumber);
         manabar.sizeDelta = new Vector2(x, manabar.sizeDelta.y);
+    }
+
+    public static void UpdateExperiencebar(float experienceAccumulated, int nextLevelExperience)
+    {
+        float nextLevelToBar = nextLevelExperience / levelbarOriginalWidth;
+        float barsize = experienceAccumulated * nextLevelToBar;
+        levelbarValue.sizeDelta = new Vector2(barsize, levelbarValue.sizeDelta.y);
+    }
+
+    public static void UpdateLevelContent(int level)
+    {
+        levelText.text = level.ToString();
     }
 
     public static void SetHoveredTarget( string message)
