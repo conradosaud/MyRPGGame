@@ -53,6 +53,9 @@ public class HUD : MonoBehaviour
         manabarOriginalWidth = manabar.sizeDelta.x;
         manabarOriginalHeight = manabar.sizeDelta.y;
 
+        // Prevent stop the player. Check to fix it later
+        if (gameManager == null)
+            return;
         UpdateHealthbar();
 
     }
@@ -65,6 +68,8 @@ public class HUD : MonoBehaviour
 
     public static void UpdateLifebar()
     {
+        if (gameManager == null)
+            return;
         int currentLifeNumber = gameManager.player.GetComponent<CharacterStatus>().currentLife;
         currentLife.text = currentLifeNumber.ToString();
         int maximumLifeNumber = gameManager.player.GetComponent<CharacterStatus>().maximumLife;
@@ -75,6 +80,8 @@ public class HUD : MonoBehaviour
 
     public static void UpdateManabar()
     {
+        if (gameManager == null)
+            return;
         int currentManaNumber = gameManager.player.GetComponent<CharacterStatus>().currentMana;
         currentMana.text = currentManaNumber.ToString();
         int maximumManaNumber = gameManager.player.GetComponent<CharacterStatus>().maximumMana;

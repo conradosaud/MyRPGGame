@@ -131,7 +131,7 @@ public class Charge_ISkill : MonoBehaviour, ISkill
         transform.position = SkillUtilities.GetTargetCenterPosition(skill);
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
+            skill.target.GetComponent<CharacterCombat>().TakeDamageFrom(skill.caster, skill.GetDamage());
     }
 
 }

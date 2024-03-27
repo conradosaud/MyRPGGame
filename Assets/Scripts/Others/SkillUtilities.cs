@@ -24,6 +24,8 @@ public static class SkillUtilities
     }
     public static float GetTargetCenterY(Skill skill)
     {
+        if (skill.caster == null)
+            return 0;
         if (skill.caster.GetComponent<Collider>() == null)
             return skill.caster.position.y;
         return skill.caster.GetComponent<Collider>().bounds.size.y / 2f;

@@ -359,13 +359,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy 1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 1.5
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -3619,6 +3621,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0991677d7d958544a5a64738c7179a5, type: 2}
   - {fileID: 11400000, guid: 80bc4baa6bed32945a381da9e206b0cc, type: 2}
   - {fileID: 11400000, guid: f83bf81da7ae57843b0615b2dbe905ad, type: 2}
+  - {fileID: 11400000, guid: d307bc20000731f46a5a5730a7f2fc7e, type: 2}
 --- !u!114 &210442786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3788,13 +3791,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Player1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 2
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -11717,13 +11722,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy 1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 1.5
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -20945,13 +20952,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy 1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 1.5
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -21913,13 +21922,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy 1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 1.5
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -25880,13 +25891,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy 1
+  level: 1
+  experienceLoot: 120
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
   regenTimeSeconds: 1.5
   lifeRegen: 1
-  manaRegen: 5
+  manaRegen: 2
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5

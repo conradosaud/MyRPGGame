@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class CharacterCombat : MonoBehaviour
 {
@@ -33,12 +32,15 @@ public class CharacterCombat : MonoBehaviour
         return true;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamageFrom(Transform from, int damage)
     {
         characterStatus.currentLife -= damage;
         HUD.UpdateLifebar();
         DisplayDamage(damage);
-        verifyIsDead();
+        if (VerifyIsDead()){
+            from.GetComponent<CharacterCombat>().EnemyIsDeadCallback(this.transform);
+            Destroy(gameObject);
+        }
     }
 
     public void ConsumeMana(int value)
@@ -47,13 +49,14 @@ public class CharacterCombat : MonoBehaviour
         HUD.UpdateManabar();
     }
 
-    void verifyIsDead()
+    bool VerifyIsDead()
     {
         if (characterStatus.currentLife <= 0)
         {
             HUD.SetMessageDebug($"O alvo [{characterStatus.name}] está morto");
-            Destroy(gameObject);
+            return true;
         }
+        return false;
     }
 
     void DisplayDamage(int value)
@@ -64,6 +67,19 @@ public class CharacterCombat : MonoBehaviour
         Vector3 position = transform.position;
         position.y = transform.GetComponent<Collider>().bounds.size.y;
         instance.transform.position = position;
+    }
+
+    public void EnemyIsDeadCallback( Transform enemy )
+    {
+        
+        characterStatus.EarnExperience(enemy.GetComponent<CharacterStatus>().experienceLoot);
+
+        // Check class passives and events
+        if( GetComponent<PlayerCombat>())
+        {
+            GetComponent<PlayerCombat>().EventCallback("EnemyIsDead");
+        }
+
     }
 
 }

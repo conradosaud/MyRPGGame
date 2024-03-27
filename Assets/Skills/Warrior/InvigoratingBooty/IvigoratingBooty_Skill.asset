@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a17c5e18caa5a448f19c7e4c1b2c2d, type: 3}
-  m_Name: Bite_Skill
+  m_Name: IvigoratingBooty_Skill
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 8665491710636597358, guid: 17c325e9cdb6d634682c2162d672f379, type: 3}
+  skillPrefab: {fileID: 7386333436102730482, guid: 155bdbbe70618b64fa36021d9001a95b, type: 3}
   caster: {fileID: 0}
   target: {fileID: 0}
-  name: Bite
-  icon: {fileID: 0}
-  countdown: 4
-  castingTime: 2.5
-  countdownElapsed: 0
+  name: Ivigorating Booty
+  icon: {fileID: 2800000, guid: 0a719c92d5fe00047b21654ed06f926c, type: 3}
+  countdown: 20
+  castingTime: 0
+  countdownElapsed: 2
   manaCost: 0
-  isPassive: 0
-  minRange: 2
-  maxRange: 2
+  isPassive: 1
+  minRange: 0
+  maxRange: 0
   velocity: 5
-  minDamage: 10
-  maxDamage: 20
+  minDamage: 0
+  maxDamage: 0
   strength: 0
-  intelligence: 0
+  intelligence: 0.1
   agility: 0
   vitality: 0

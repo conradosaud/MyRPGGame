@@ -62,7 +62,7 @@ public class MagicBlades_ISkill : MonoBehaviour, ISkill
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Enemy") && collider.GetComponent<CharacterCombat>() != null)
-            collider.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
+            collider.GetComponent<CharacterCombat>().TakeDamageFrom(skill.caster, skill.GetDamage());
     }
 
 }

@@ -26,6 +26,8 @@ public class Skill : ScriptableObject
     public float castingTime = 0;
     [HideInInspector] public float countdownElapsed = 0;
     public int manaCost = 0;
+    [Space(10)]
+    public bool isPassive = false;
 
     [Header("Range")]
     public int minRange = 2;
@@ -99,7 +101,10 @@ public class Skill : ScriptableObject
 
     public int GetDamage()
     {
-        
+
+        if (caster == null)
+            return 0;
+
         int baseDamage = UnityEngine.Random.Range(minDamage, maxDamage);
         
         int casterStrength = caster.GetComponent<CharacterStatus>().GetStatus("strength");

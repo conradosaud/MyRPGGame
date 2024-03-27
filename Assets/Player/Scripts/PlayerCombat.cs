@@ -7,27 +7,47 @@ public class PlayerCombat : CharacterCombat
     PlayerMove playerMove;
     CharacterSkills characterSkills;
     List<Skill> skillsList;
+    List<Skill> passiveSkills;
 
     void Start()
     {
         base.Start();
         playerMove = GetComponent<PlayerMove>();
         characterSkills = GetComponent<CharacterSkills>();
+        
         skillsList = characterSkills.skills;
+        foreach (Skill skill in skillsList)
+            if( skill.isPassive)
+            {
+                skill.caster = transform;
+                skill.target = transform;
+                passiveSkills.Add(skill);
+            }
+
     }
 
     void Update()
     {
         
-        // Get keys to defined if is a casting
+        // Get keys to define if is a casting
         for (int i = 0; i <= 9; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
             {
+                if (skillsList.Count < i || Input.GetKeyDown(KeyCode.Alpha0) )
+                    return;
+
                 int input = i - 1;
+
+
+                if (skillsList[input].isPassive)
+                    continue;
+
                 base.selectedSkill = skillsList[input];
             }
         }
+
+        //ActivatePassiveSkills();
 
         if (PlayerInput.selectedTarget == null || PlayerInput.selectedTarget.CompareTag("Enemy") == false)
             return;
@@ -76,5 +96,17 @@ public class PlayerCombat : CharacterCombat
         }
     }
 
+    public void EventCallback(string callback)
+    {
+        if(callback == "EnemyIsDead")
+        {
+            // Filter by class, etc...
+            foreach (Skill skill in passiveSkills)
+            {
+                if (skill.name == "Ivigorating Booty" && skill.CanCastSkill() )
+                    skill.CastSkill();
+            }
+        }
+    }
 
 }

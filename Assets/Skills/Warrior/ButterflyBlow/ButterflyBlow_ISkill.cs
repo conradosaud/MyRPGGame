@@ -47,7 +47,7 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
     public void ExecuteSkillAnimation()
     {
 
-        // Cancel and destroy object if there's target anymore
+        // Cancel and destroy object if there's no target
         if (skill.target == null)
         {
             Destroy(gameObject);
@@ -55,7 +55,7 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
         }
 
         // Start the particles system. If it has a mesh, shoud be enabled here
-        //GetComponent<ParticleSystem>().Play();
+        GetComponent<ParticleSystem>().Play();
         Invoke("SkillDamage", firstDamageTime);
         Invoke("SkillDamage", firstDamageTime + secondDamageTime);
 
@@ -63,10 +63,10 @@ public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
 
     void SkillDamage()
     {
+        if (skill.target == null)
+            return;
         transform.position = SkillUtilities.GetTargetCenterPosition(skill);
-        // Apply this skill effect
-        if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
+        skill.target.GetComponent<CharacterCombat>().TakeDamageFrom(skill.caster, skill.GetDamage());
     }
 
 

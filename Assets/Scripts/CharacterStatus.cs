@@ -8,6 +8,10 @@ public class CharacterStatus : MonoBehaviour
 
     public string name = "None";
 
+    public int level = 1;
+    [SerializeField] float experienceAccumulated = 0;
+    public float experienceLoot = 120;
+
     [Header("Health")]
     public int currentLife = 100;
     [HideInInspector] public int maximumLife = 100;
@@ -44,6 +48,14 @@ public class CharacterStatus : MonoBehaviour
             { "bonus", 0 },
             { "modifier", 0 }
         }}
+    };
+
+    private Dictionary<int, int> experiencePerLevelTable = new Dictionary<int, int>()
+    {
+        { 1, 0 },    // Nível 1 requer 0 de experiência
+        { 2, 100 },  // Nível 2 requer 100 de experiência
+        { 3, 200 },  // Nível 3 requer 200 de experiência
+        // Adicione mais níveis e experiência conforme necessário
     };
 
     private void Start()
@@ -104,7 +116,7 @@ public class CharacterStatus : MonoBehaviour
 
         if (value + currentLife > maximumLife)
         {
-            value = maximumLife;
+            value = maximumLife - currentLife;
         }
 
         currentLife += value;
@@ -126,6 +138,44 @@ public class CharacterStatus : MonoBehaviour
         currentMana+= value;
         HUD.UpdateLifebar();
 
+    }
+
+    public void EarnExperience(float value)
+    {
+        // Adiciona a quantidade de experiência ganha à variável experience
+        experienceAccumulated += value;
+
+        // Verifica se o personagem alcançou ou ultrapassou a quantidade de experiência necessária para o próximo nível
+        while (experienceAccumulated >= ExperienceToNextLevel(level))
+        {
+            // Incrementa o nível do personagem
+            level++;
+            Debug.Log("Subiu de level");
+
+            // Se o próximo nível não estiver na tabela de experiência, encerra o loop
+            if (!experiencePerLevelTable.ContainsKey(level))
+            {
+                break;
+            }
+
+            // Subtrai a experiência necessária para alcançar o próximo nível da experiência atual
+            experienceAccumulated -= experiencePerLevelTable[level];
+        }
+    }
+
+    private int ExperienceToNextLevel(int level)
+    {
+        // Se o nível estiver na tabela de experiência, retorna a quantidade de experiência necessária
+        if (experiencePerLevelTable.ContainsKey(level))
+        {
+            return experiencePerLevelTable[level];
+        }
+        // Se o nível não estiver na tabela, retorna um valor padrão (ou lida com o erro de alguma outra forma)
+        else
+        {
+            Debug.LogWarning("Nível não encontrado na tabela de experiência. Nível: " + level);
+            return -1; // Ou outro valor padrão de sua escolha
+        }
     }
 
 }

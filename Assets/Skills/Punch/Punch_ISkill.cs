@@ -58,7 +58,7 @@ public class Punch_ISkill : MonoBehaviour, ISkill
 
         // Apply this skill effect
         if (skill.target.GetComponent<CharacterCombat>() != null)
-            skill.target.GetComponent<CharacterCombat>().TakeDamage(skill.GetDamage());
+            skill.target.GetComponent<CharacterCombat>().TakeDamageFrom(skill.caster, skill.GetDamage());
 
     }
 
