@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
-        hud = GameObject.FindWithTag("HUD").transform;
+        hud = GameObject.FindWithTag("UI").transform.Find("HUD").transform;
 
         messages = hud.Find("Messages");
         messagesHoveredTarget = messages.Find("HoveredTarget");

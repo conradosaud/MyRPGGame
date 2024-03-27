@@ -107,8 +107,8 @@ public class Skill : ScriptableObject
         int casterAgility = caster.GetComponent<CharacterStatus>().GetStatus("agility");
         
         float strengthDamage = casterStrength * strength;
-        float intelligenceDamage = casterIntelligence * strength;
-        float agilityDamage = casterAgility * strength;
+        float intelligenceDamage = casterIntelligence * intelligence;
+        float agilityDamage = casterAgility * agility;
 
         float finalDamage = baseDamage + ( strengthDamage + intelligenceDamage + agilityDamage );
         finalDamage = (float)Math.Floor(finalDamage);

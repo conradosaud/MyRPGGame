@@ -35,7 +35,7 @@ public class CharacterStatus : MonoBehaviour
             { "modifier", 0 }
         }},
         { "agility", new Dictionary<string, int>() {
-            { "points", 10 },
+            { "points", 100 },
             { "bonus", 0 },
             { "modifier", 0 }
         }},

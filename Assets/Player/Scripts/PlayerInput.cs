@@ -9,6 +9,9 @@ public class PlayerInput : MonoBehaviour
     public static Transform hoveredTarget;
     public static Transform selectedTarget;
 
+    public static KeyCode characteristicsKey = KeyCode.C;
+    public static bool showCharacteristics;
+
     void Update()
     {
         // Get clicked location
@@ -22,8 +25,19 @@ public class PlayerInput : MonoBehaviour
             SelectTarget( hoveredTarget );
         }
 
+        WindowMenu();
+
         // Debug messages on screen to dev orientation
         ShowDebugDisplays();
+    }
+
+    void WindowMenu()
+    {
+        if( Input.GetKeyDown(characteristicsKey))
+        {
+            bool isActive = GameObject.FindWithTag("UI").transform.Find("Windows").Find("Characteristics").gameObject.activeSelf;
+            GameObject.FindWithTag("UI").transform.Find("Windows").Find("Characteristics").gameObject.SetActive(!isActive);
+        }
     }
 
     Vector3 GetClickedPosition()

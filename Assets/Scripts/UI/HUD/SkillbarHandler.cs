@@ -22,7 +22,7 @@ public class SkillbarHandler : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        hud = GameObject.FindWithTag("HUD").transform;
+        hud = GameObject.FindWithTag("UI").transform.Find("HUD").transform;
         skillbar = hud.Find("Skillbar");
         skillbarSlotSize = skillbar.GetChild(0).GetComponent<RectTransform>().sizeDelta.magnitude;
 

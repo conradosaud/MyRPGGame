@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public Transform player;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
     }
