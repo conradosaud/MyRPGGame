@@ -58,7 +58,7 @@ public class HUD : MonoBehaviour
         lifebarOriginalHeight = lifebar.sizeDelta.y;
         manabarOriginalWidth = manabar.sizeDelta.x;
         manabarOriginalHeight = manabar.sizeDelta.y;
-        levelbarOriginalWidth = levelPanel.Find("Levelbar").Find("LevelBackground")
+        levelbarOriginalWidth = levelPanel.Find("Levelbar").Find("LevelbarBackground")
             .GetComponent<RectTransform>().sizeDelta.x;
 
         // Prevent stop the player. Check to fix it later
@@ -100,9 +100,10 @@ public class HUD : MonoBehaviour
 
     public static void UpdateExperiencebar(float experienceAccumulated, int nextLevelExperience)
     {
-        float nextLevelToBar = nextLevelExperience / levelbarOriginalWidth;
-        float barsize = experienceAccumulated * nextLevelToBar;
-        levelbarValue.sizeDelta = new Vector2(barsize, levelbarValue.sizeDelta.y);
+        float experienceProgress = experienceAccumulated / nextLevelExperience;
+        float newBarSize = experienceProgress * levelbarOriginalWidth;
+        Debug.Log(newBarSize);
+        levelbarValue.sizeDelta = new Vector2(newBarSize, levelbarValue.sizeDelta.y);
     }
 
     public static void UpdateLevelContent(int level)

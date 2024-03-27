@@ -361,7 +361,7 @@ MonoBehaviour:
   name: Enemy 1
   level: 1
   experienceAccumulated: 0
-  experienceLoot: 120
+  experienceLoot: 50
   currentLife: 100
   maximumLife: 100
   currentMana: 50
@@ -9246,7 +9246,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 493.416, y: 10}
+  m_SizeDelta: {x: 480.905, y: 10}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &766867575
 MonoBehaviour:
@@ -11828,7 +11828,7 @@ MonoBehaviour:
   name: Enemy 1
   level: 1
   experienceAccumulated: 0
-  experienceLoot: 120
+  experienceLoot: 50
   currentLife: 100
   maximumLife: 100
   currentMana: 50
@@ -20957,7 +20957,7 @@ MonoBehaviour:
   name: Enemy 1
   level: 1
   experienceAccumulated: 0
-  experienceLoot: 120
+  experienceLoot: 50
   currentLife: 100
   maximumLife: 100
   currentMana: 50
@@ -22030,7 +22030,7 @@ MonoBehaviour:
   name: Enemy 1
   level: 1
   experienceAccumulated: 0
-  experienceLoot: 120
+  experienceLoot: 50
   currentLife: 100
   maximumLife: 100
   currentMana: 50
@@ -26037,7 +26037,7 @@ MonoBehaviour:
   name: Enemy 1
   level: 1
   experienceAccumulated: 0
-  experienceLoot: 120
+  experienceLoot: 50
   currentLife: 100
   maximumLife: 100
   currentMana: 50

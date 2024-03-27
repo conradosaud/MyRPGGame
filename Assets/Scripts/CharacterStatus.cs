@@ -50,7 +50,7 @@ public class CharacterStatus : MonoBehaviour
         }}
     };
 
-    private Dictionary<int, int> experiencePerLevelTable = new Dictionary<int, int>()
+    private Dictionary<int, int> experienceTable = new Dictionary<int, int>()
     {
         { 1, 0 },
         { 2, 100 },
@@ -148,15 +148,15 @@ public class CharacterStatus : MonoBehaviour
         experienceAccumulated += value;
 
         // Verifica se o personagem alcançou ou ultrapassou a quantidade de experiência necessária para o próximo nível
-        if (experienceAccumulated >= experiencePerLevelTable[level+1] )
+        if (experienceAccumulated >= experienceTable[level+1] )
         {
             // Incrementa o nível do personagem
             // Subtrai a experiência necessária para alcançar o próximo nível da experiência atual
             LevelUp();
-            experienceAccumulated -= experiencePerLevelTable[level];
+            experienceAccumulated -= experienceTable[level];
         }
 
-        HUD.UpdateExperiencebar(experienceAccumulated, experiencePerLevelTable[level]);
+        HUD.UpdateExperiencebar(experienceAccumulated, experienceTable[level+1]);
 
     }
 
