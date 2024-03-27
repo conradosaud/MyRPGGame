@@ -363,6 +363,9 @@ MonoBehaviour:
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -3240,13 +3243,16 @@ PrefabInstance:
       addedObject: {fileID: 210442787}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 210442797}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 210442786}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
       insertIndex: -1
       addedObject: {fileID: 210442785}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 210442798}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 210442797}
   m_SourcePrefab: {fileID: 100100000, guid: e0cd3bfff7769f641940a87748d1ef36, type: 3}
 --- !u!1 &210442781 stripped
 GameObject:
@@ -3424,14 +3430,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 210442781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f21add62f9df7b04daddfac653491250, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bf73c1eea763674bb9438f9a661df83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: None
+--- !u!114 &210442798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210442781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215ef82c09c37084ba077509f4158ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Player1
   currentLife: 100
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -8590,6 +8611,9 @@ MonoBehaviour:
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -15329,6 +15353,9 @@ MonoBehaviour:
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -15985,6 +16012,9 @@ MonoBehaviour:
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
@@ -18459,6 +18489,9 @@ MonoBehaviour:
   maximumLife: 100
   currentMana: 50
   maximumMana: 50
+  regenTimeSeconds: 1.5
+  lifeRegen: 1
+  manaRegen: 5
   range: 2
   attackSpeed: 0.3
   moveSpeed: 5
