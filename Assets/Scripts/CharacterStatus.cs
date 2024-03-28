@@ -134,7 +134,7 @@ public class CharacterStatus : MonoBehaviour
 
         if( value + currentMana> maximumMana)
         {
-            value = maximumMana;
+            value = maximumMana - currentMana;
         }
 
         currentMana+= value;
