@@ -18,10 +18,10 @@ MonoBehaviour:
   name: Penetrating Blow
   icon: {fileID: 2800000, guid: b360484cc96099e479091eef5ef7d20c, type: 3}
   countdown: 2
-  castingTime: 1.5
+  castingTime: 0.8
   countdownElapsed: 2
   manaCost: 5
-  isPassive: 1
+  isPassive: 0
   minRange: 2
   maxRange: 2
   velocity: 5
