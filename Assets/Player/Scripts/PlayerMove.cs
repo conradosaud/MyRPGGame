@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Main script for third-person movement of the character in the game.

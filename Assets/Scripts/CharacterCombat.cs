@@ -37,8 +37,10 @@ public class CharacterCombat : MonoBehaviour
         characterStatus.currentLife -= damage;
         HUD.UpdateLifebar();
         DisplayDamage(damage);
-        if (VerifyIsDead()){
-            from.GetComponent<CharacterCombat>().EnemyIsDeadCallback(this.transform);
+        if (VerifyIsDead())
+        {
+            // Dont work on final build... why?
+            //from.GetComponent<CharacterCombat>().EnemyIsDeadCallback(transform);
             Destroy(gameObject);
         }
     }
