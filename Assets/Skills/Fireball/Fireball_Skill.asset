@@ -20,8 +20,10 @@ MonoBehaviour:
   countdown: 1.5
   castingTime: 1.5
   countdownElapsed: -0.01999874
+  manaCost: 0
+  isPassive: 0
   minRange: 2
-  maxRange: 5
+  maxRange: 10
   velocity: 5
   minDamage: 4
   maxDamage: 8

@@ -10,7 +10,7 @@ public class CharacterStatus : MonoBehaviour
 
     public int level = 1;
     [SerializeField] float experienceAccumulated = 0;
-    public float experienceLoot = 120;
+    public float experienceLoot = 0;
 
     [Header("Health")]
     public int currentLife = 100;
@@ -29,22 +29,22 @@ public class CharacterStatus : MonoBehaviour
     [Header("Attributes")]
     public Dictionary<string, Dictionary<string, int>> status = new Dictionary<string, Dictionary<string, int>>() {
         { "strength", new Dictionary<string, int>() {
-            { "points", 10 },
+            { "points", 0 },
             { "bonus", 0 },
             { "modifier", 0 }
         }},
         { "intelligence", new Dictionary<string, int>() {
-            { "points", 10 },
+            { "points", 0 },
             { "bonus", 0 },
             { "modifier", 0 }
         }},
         { "agility", new Dictionary<string, int>() {
-            { "points", 100 },
+            { "points", 0 },
             { "bonus", 0 },
             { "modifier", 0 }
         }},
         { "vitality", new Dictionary<string, int>() {
-            { "points", 10 },
+            { "points", 0 },
             { "bonus", 0 },
             { "modifier", 0 }
         }}

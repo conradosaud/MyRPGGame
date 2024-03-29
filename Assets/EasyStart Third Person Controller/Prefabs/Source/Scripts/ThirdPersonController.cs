@@ -1,6 +1,14 @@
-﻿
-using UnityEditor.VersionControl;
+﻿using NUnit.Framework;
+using NUnit.Framework.Internal;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.Presets;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 /*
     This file has a commented version with details about how each line works. 
@@ -50,10 +58,6 @@ public class ThirdPersonController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
-        // Message informing the user that they forgot to add an animator
-        if (animator == null)
-            Debug.LogWarning("Hey buddy, you don't have the Animator component in your player. Without it, the animations won't work.");
     }
 
 
@@ -74,8 +78,7 @@ public class ThirdPersonController : MonoBehaviour
             isCrouching = !isCrouching;
 
         // Run and Crouch animation
-        // If dont have animator component, this block wont run
-        if ( cc.isGrounded && animator != null )
+        if ( cc.isGrounded )
         {
 
             // Crouch
@@ -93,8 +96,7 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         // Jump animation
-        if( animator != null )
-            animator.SetBool("air", cc.isGrounded == false );
+        animator.SetBool("air", cc.isGrounded == false );
 
         // Handle can jump or not
         if ( inputJump && cc.isGrounded )
