@@ -1,9 +1,5 @@
 ﻿
-using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /// <summary>
 /// Main script for third-person movement of the character in the game.

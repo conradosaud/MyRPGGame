@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEngine.GraphicsBuffer;
 
 public class ButterflyBlow_ISkill : MonoBehaviour, ISkill
 {

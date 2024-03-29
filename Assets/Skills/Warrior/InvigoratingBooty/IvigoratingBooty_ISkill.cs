@@ -1,12 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEngine.GraphicsBuffer;
 
 public class IvigoratingBooty_ISkill : MonoBehaviour, ISkill
 {
@@ -37,8 +30,6 @@ public class IvigoratingBooty_ISkill : MonoBehaviour, ISkill
         int lifePercent = (int) Math.Floor(characterStatus.maximumLife * recoveryLifePercent);
         int intelligencePercent = skill.GetDamage();
         int finalRecovery = lifePercent + intelligencePercent;
-
-        Debug.Log("Recovering passive");
 
         characterStatus.RecoverLife(finalRecovery);
 

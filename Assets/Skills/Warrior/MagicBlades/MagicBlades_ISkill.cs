@@ -1,15 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Security;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Playables;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
-using static UnityEngine.GraphicsBuffer;
 
 public class MagicBlades_ISkill : MonoBehaviour, ISkill
 {

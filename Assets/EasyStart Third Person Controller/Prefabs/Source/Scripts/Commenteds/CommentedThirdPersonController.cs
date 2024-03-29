@@ -1,12 +1,4 @@
-﻿using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
-using UnityEditor.Presets;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
+﻿using UnityEngine;
 
 /*
     You are lost? Read the Tutorial.pdf file from this pack. There is a lot of information there. 
