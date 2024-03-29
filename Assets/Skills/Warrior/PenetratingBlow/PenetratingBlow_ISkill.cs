@@ -16,8 +16,8 @@ public class PenetratingBlow_ISkill : MonoBehaviour, ISkill
     Skill skill;
     Skill ISkill.skill { get { return skill; } set { skill = value; } }
 
-    float strengthScale = 0.3f;
-    float agilityScale = 0.4f;
+    public float strengthScale = 0.3f;
+    public float agilityScale = 0.4f;
     public float skillStartTime = 1f;
 
     int targetsHitCount = 0;

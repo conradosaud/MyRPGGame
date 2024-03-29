@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     public static Transform hoveredTarget;
     public static Transform selectedTarget;
 
+    public static KeyCode cancelTargetSelect = KeyCode.Escape;
     public static KeyCode characteristicsKey = KeyCode.C;
     public static bool showCharacteristics;
 
@@ -25,6 +26,7 @@ public class PlayerInput : MonoBehaviour
             SelectTarget( hoveredTarget );
         }
 
+        HandleKeys();
         WindowMenu();
 
         // Debug messages on screen to dev orientation
@@ -37,6 +39,14 @@ public class PlayerInput : MonoBehaviour
         {
             bool isActive = GameObject.FindWithTag("UI").transform.Find("Windows").Find("Characteristics").gameObject.activeSelf;
             GameObject.FindWithTag("UI").transform.Find("Windows").Find("Characteristics").gameObject.SetActive(!isActive);
+        }
+    }
+
+    void HandleKeys()
+    {
+        if (Input.GetKeyDown(cancelTargetSelect))
+        {
+            CancelTargetSelect();
         }
     }
 
@@ -60,8 +70,6 @@ public class PlayerInput : MonoBehaviour
                 // Se o ponto atingido estiver fora do terreno (skybox), calcule um ponto na mesma direção
                 targetPosition = ray.GetPoint(1000f); // Use um valor grande para garantir que está fora do terreno
             }
-
-            //targetPosition.y = 0;
 
         }
 
@@ -98,19 +106,30 @@ public class PlayerInput : MonoBehaviour
 
     void SelectTarget( Transform target)
     {
-        // Diselect last selected target
-        if( selectedTarget != null && selectedTarget.GetComponent<Outline>() )
-            selectedTarget.GetComponent<Outline>().enabled = false;
 
-        if (target == null)
+        if (target == null || target == selectedTarget)
             return;
+
+        // Keep selection on move if target is a enemy
+        if( selectedTarget != null && selectedTarget.CompareTag("Enemy") == true )
+            if( target.CompareTag("Enemy") == false)
+                return;
+
+        CancelTargetSelect();
 
         // Add new selected target
         selectedTarget = target;
+        // Enable outline from target if it has
         if(selectedTarget.GetComponent<Outline>() != null )
-        {
             selectedTarget.GetComponent<Outline>().enabled = true;
-        }
+    }
+
+    void CancelTargetSelect()
+    {
+        // Remove outline from last selected target
+        if (selectedTarget != null && selectedTarget.GetComponent<Outline>())
+            selectedTarget.GetComponent<Outline>().enabled = false;
+        selectedTarget = null;
     }
 
 }

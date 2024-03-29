@@ -28,6 +28,6 @@ MonoBehaviour:
   minDamage: 20
   maxDamage: 30
   strength: 0
-  intelligence: 0.1
+  intelligence: 0
   agility: 0
   vitality: 0

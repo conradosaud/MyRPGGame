@@ -102,7 +102,6 @@ public class HUD : MonoBehaviour
     {
         float experienceProgress = experienceAccumulated / nextLevelExperience;
         float newBarSize = experienceProgress * levelbarOriginalWidth;
-        Debug.Log(newBarSize);
         levelbarValue.sizeDelta = new Vector2(newBarSize, levelbarValue.sizeDelta.y);
     }
 

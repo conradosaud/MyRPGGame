@@ -66,14 +66,14 @@ public class PlayerMove : MonoBehaviour
 
         // Dont move if is in the limit of offset
         //if( PlayerInput.hoveredTarget == PlayerInput.selectedTarget) // maybe check if is null?
-        if (PlayerInput.selectedTarget != null && PlayerInput.selectedTarget.CompareTag("Enemy") )
-        {
+        //if (PlayerInput.selectedTarget != null && PlayerInput.selectedTarget.CompareTag("Enemy") )
+        //{
             
-            float offsetDistance = Vector3.Distance(transform.position, PlayerInput.selectedTarget.position);
-            if (offsetDistance < characterStatus.range)
-                return;
+        //    float offsetDistance = Vector3.Distance(transform.position, PlayerInput.selectedTarget.position);
+        //    if (offsetDistance < characterStatus.range)
+        //        return;
             
-        }
+        //}
 
         // Check if is not moved. Return and set state
         if ( moveDirection == Vector3.zero)
